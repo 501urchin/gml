@@ -1,24 +1,13 @@
 package gml
 
 import (
+	"io"
 	"strings"
 )
 
-type HtmlElement interface {
-	Render() string
-}
-
-type Element struct {
-	void          bool
-	tag           string
-	attributes    []Attr
-	attrKeysLen   int
-	attrValuesLen int
-	children      []HtmlElement
-}
-
 func (d Element) Render() string {
-	builder := strings.Builder{}
+	var builder strings.Builder
+
 	l := len(d.attributes)
 	builder.Grow(
 		6 + (2 * len(d.tag)) + // opening and closing tag
@@ -51,6 +40,54 @@ func (d Element) Render() string {
 	builder.WriteRune('>')
 
 	return builder.String()
+}
+
+func (d Element) RenderStream(w io.Writer) error {
+	// open tag
+	if _, err := w.Write([]byte("<")); err != nil {
+		return err
+	}
+	if _, err := w.Write([]byte(d.tag)); err != nil {
+		return err
+	}
+
+	// attributes
+	for _, attr := range d.attributes {
+		if _, err := w.Write([]byte(" ")); err != nil {
+			return err
+		}
+		if _, err := w.Write([]byte(attr.Render())); err != nil {
+			return err
+		}
+	}
+
+	if _, err := w.Write([]byte(">")); err != nil {
+		return err
+	}
+
+	if d.void {
+		return nil
+	}
+
+	// children
+	for _, child := range d.children {
+		if err := child.RenderStream(w); err != nil {
+			return err
+		}
+	}
+
+	// closing tag
+	if _, err := w.Write([]byte("</")); err != nil {
+		return err
+	}
+	if _, err := w.Write([]byte(d.tag)); err != nil {
+		return err
+	}
+	if _, err := w.Write([]byte(">")); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func newElement(tag string, void bool, attributes []Attr, children ...HtmlElement) Element {

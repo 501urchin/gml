@@ -1,11 +1,8 @@
 package gml
 
-import "strings"
-
-type Attr struct {
-	Key   string
-	Value string
-}
+import (
+	"strings"
+)
 
 func (a Attr) Render() string {
 	var b strings.Builder
@@ -19,10 +16,6 @@ func (a Attr) Render() string {
 		b.WriteByte('"')
 	}
 	return b.String()
-}
-
-type HtmlAttribute interface {
-	Render() string
 }
 
 func Attribute(key, value string) Attr {
