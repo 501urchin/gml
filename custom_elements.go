@@ -11,6 +11,8 @@ type content struct {
 	htmlString string
 }
 
+// Content creates a content struct representing the inner content of an HTML element.
+// It can also be used to render raw HTML strings directly.
 func Content(t string) content {
 	return content{htmlString: t}
 }

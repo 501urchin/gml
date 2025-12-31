@@ -7,7 +7,7 @@ import (
 func TestFor(t *testing.T) {
 	tag := `<p>hello</p>`
 	expected := ""
-	elm := P().Children(Text("hello"))
+	elm := P().Children(Content("hello"))
 
 	html := For(func() []HtmlElement {
 		var buf []HtmlElement

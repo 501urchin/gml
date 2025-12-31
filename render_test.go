@@ -11,7 +11,7 @@ func TestElement(t *testing.T) {
 	expected := `<h1 class="text-white">hello</h1>`
 
 	attributes := []Attr{{Key: "class", Value: "text-white"}}
-	childElm := Text("hello")
+	childElm := Content("hello")
 	void := false
 	elementTag := "h1"
 
@@ -85,7 +85,7 @@ func BenchmarkRender(b *testing.B) {
 						Attribute("content", "counter demo with gml"),
 					),
 					Title().Children(
-						Text("gml!!!!"),
+						Content("gml!!!!"),
 					),
 					Script().Attributes(
 						Attribute("src", "https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"),
@@ -99,7 +99,7 @@ func BenchmarkRender(b *testing.B) {
 				Attributes(Attribute("class", "flex bg-black min-h-screen w-full items-center justify-center")).
 				Children(
 					Script().Children(
-						Text("console.log('Hello from GML !!!')"),
+						Content("console.log('Hello from GML !!!')"),
 					),
 					Main().
 						Attributes(
@@ -113,7 +113,7 @@ func BenchmarkRender(b *testing.B) {
 									Attribute("class", "text-white bg-neutral-800 rounded-md p-1 col-span-2 text-center"),
 								).
 								Children(
-									Text("0"),
+									Content("0"),
 								),
 
 							Button().
@@ -122,7 +122,7 @@ func BenchmarkRender(b *testing.B) {
 									Attribute("class", "col-span-1 p-1 w-full cursor-pointer text-sm text-white select-none bg-neutral-900 rounded-md active:scale-98  will-change-transform ease-in-out"),
 								).
 								Children(
-									Text("+"),
+									Content("+"),
 								),
 
 							Button().
@@ -132,7 +132,7 @@ func BenchmarkRender(b *testing.B) {
 									Attribute("class", "col-span-1 p-1 w-full  text-sm text-white bg-neutral-900 rounded-md"),
 								).
 								Children(
-									Text("-"),
+									Content("-"),
 								),
 
 							Button().
@@ -142,7 +142,7 @@ func BenchmarkRender(b *testing.B) {
 									Attribute("class", "col-span-2 p-1 w-full  text-sm text-white bg-neutral-900 rounded-md"),
 								).
 								Children(
-									Text("⟳"),
+									Content("⟳"),
 								),
 
 							For(func() []HtmlElement {
@@ -154,7 +154,7 @@ func BenchmarkRender(b *testing.B) {
 												Attribute("class", "text-white col-span-full text-center text-sm"),
 											).
 											Children(
-												Text(strconv.Itoa(i)),
+												Content(strconv.Itoa(i)),
 											),
 									)
 								}
