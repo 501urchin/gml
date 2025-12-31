@@ -4,7 +4,7 @@ import (
 	"strings"
 )
 
-func (a Attr) Render() string {
+func (a Attr) RenderHtml() string {
 	var b strings.Builder
 	b.Grow(len(a.Key) + len(a.Value) + 3)
 	b.WriteString(a.Key)

@@ -1,11 +1,70 @@
 package gml
 
 import (
+	"bytes"
 	"os"
 	"testing"
 )
 
-func BenchmarkStream(b *testing.B) {
+func TestElement(t *testing.T) {
+	expected := `<h1 class="text-white">hello</h1>`
+
+	attributes := []Attr{{Key: "class", Value: "text-white"}}
+	childElm := Text("hello")
+	void := false
+	elementTag := "h1"
+
+	elm := newElement(elementTag, void, attributes, childElm)
+
+	if elm.tag != elementTag {
+		t.Errorf("tag mismatch: expected %q, got %q", elementTag, elm.tag)
+	}
+
+	if len(elm.children) != 1 {
+		t.Errorf("children length mismatch: expected 1, got %d", len(elm.children))
+	} else if elm.children[0] != childElm {
+		t.Errorf("child mismatch: expected %#v, got %#v", childElm, elm.children[0])
+	}
+
+	if len(elm.attributes) != 1 {
+		t.Errorf("attributes length mismatch: expected 1, got %d", len(elm.attributes))
+	} else if elm.attributes[0] != attributes[0] {
+		t.Errorf("attribute mismatch: expected %#v, got %#v", attributes[0], elm.attributes[0])
+	}
+
+	if elm.void != void {
+		t.Errorf("void flag mismatch: expected %t, got %t", void, elm.void)
+	}
+
+	t.Run("render empty tag", func(t *testing.T) {
+		html := newElement("", void, attributes, childElm).RenderHtml()
+		if html != "" {
+			t.Errorf("render empty tag mismatch: expected empty string, got %q", html)
+		}
+	})
+
+	t.Run("render", func(t *testing.T) {
+		var buf bytes.Buffer
+
+		err := elm.Render(&buf)
+		if err != nil {
+			t.Errorf("render returned error: %v", err)
+		}
+
+		if got := buf.String(); got != expected {
+			t.Errorf("render output mismatch:\nexpected:\n%s\ngot:\n%s", expected, got)
+		}
+	})
+
+	t.Run("render raw html", func(t *testing.T) {
+		if got := elm.RenderHtml(); got != expected {
+			t.Errorf("renderHtml output mismatch:\nexpected:\n%s\ngot:\n%s", expected, got)
+		}
+	})
+
+}
+
+func BenchmarkRender(b *testing.B) {
 	template := Html(nil,
 		Head(nil,
 			Title(nil, Text("gsx!!!!")),
@@ -60,7 +119,7 @@ func BenchmarkStream(b *testing.B) {
 
 		b.ResetTimer()
 		for b.Loop() {
-			template.RenderStream(file)
+			template.Render(file)
 		}
 
 	})
@@ -68,7 +127,7 @@ func BenchmarkStream(b *testing.B) {
 	b.Run("render normal", func(b *testing.B) {
 
 		for b.Loop() {
-			template.Render()
+			template.RenderHtml()
 		}
 	})
 }

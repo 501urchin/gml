@@ -5,91 +5,6 @@ import (
 	"strings"
 )
 
-func (d Element) Render() string {
-	var builder strings.Builder
-
-	l := len(d.attributes)
-	builder.Grow(
-		6 + (2 * len(d.tag)) + // opening and closing tag
-			(l) + // space rune between attr
-			d.attrKeysLen +
-			d.attrValuesLen,
-	)
-
-	builder.WriteRune('<')
-	builder.WriteString(d.tag)
-
-	// attributes - 10% allocs
-	for _, attr := range d.attributes {
-		builder.WriteRune(' ')
-		builder.WriteString(attr.Render())
-	}
-	builder.WriteString(">")
-
-	if d.void {
-		return builder.String()
-	}
-	// chldren - 42% allocs
-	for _, child := range d.children {
-		builder.WriteString(child.Render())
-	}
-
-	// closing tag
-	builder.WriteString("</")
-	builder.WriteString(d.tag)
-	builder.WriteRune('>')
-
-	return builder.String()
-}
-
-func (d Element) RenderStream(w io.Writer) error {
-	// open tag
-	if _, err := w.Write([]byte("<")); err != nil {
-		return err
-	}
-	if _, err := w.Write([]byte(d.tag)); err != nil {
-		return err
-	}
-
-	// attributes
-	for _, attr := range d.attributes {
-		if _, err := w.Write([]byte(" ")); err != nil {
-			return err
-		}
-		if _, err := w.Write([]byte(attr.Render())); err != nil {
-			return err
-		}
-	}
-
-	if _, err := w.Write([]byte(">")); err != nil {
-		return err
-	}
-
-	if d.void {
-		return nil
-	}
-
-	// children
-	for _, child := range d.children {
-		if err := child.RenderStream(w); err != nil {
-			return err
-		}
-	}
-
-	// closing tag
-	if _, err := w.Write([]byte("</")); err != nil {
-		return err
-	}
-	if _, err := w.Write([]byte(d.tag)); err != nil {
-		return err
-	}
-	if _, err := w.Write([]byte(">")); err != nil {
-		return err
-	}
-
-	return nil
-}
-
 func newElement(tag string, void bool, attributes []Attr, children ...HtmlElement) Element {
 	elm := Element{}
 	elm.tag = tag
@@ -111,4 +26,99 @@ func newElement(tag string, void bool, attributes []Attr, children ...HtmlElemen
 	}
 
 	return elm
+}
+
+func (d Element) RenderHtml() string {
+	var builder strings.Builder
+
+	if d.tag == "" {
+		return ""
+	}
+
+	l := len(d.attributes)
+	builder.Grow(
+		6 + (2 * len(d.tag)) + // opening and closing tag
+			l + // space rune between attr
+			d.attrKeysLen +
+			d.attrValuesLen,
+	)
+
+	builder.WriteRune('<')
+	builder.WriteString(d.tag)
+
+	// render child attributes
+	for _, attr := range d.attributes {
+		builder.WriteRune(' ')
+		builder.WriteString(attr.RenderHtml())
+	}
+	builder.WriteString(">")
+
+	// if the elm is void (self closing) return early since it wont have children or a closing tag
+	if d.void {
+		return builder.String()
+	}
+
+	// render child elements
+	for _, child := range d.children {
+		builder.WriteString(child.RenderHtml())
+	}
+
+	// closing tag
+	builder.WriteString("</")
+	builder.WriteString(d.tag)
+	builder.WriteRune('>')
+
+	return builder.String()
+}
+
+func (d Element) Render(w io.Writer) error {
+	if d.tag == "" {
+		return nil
+	}
+
+	// open tag
+	if _, err := w.Write([]byte("<")); err != nil {
+		return err
+	}
+	if _, err := w.Write([]byte(d.tag)); err != nil {
+		return err
+	}
+
+	// attributes
+	for _, attr := range d.attributes {
+		if _, err := w.Write([]byte(" ")); err != nil {
+			return err
+		}
+		if _, err := w.Write([]byte(attr.RenderHtml())); err != nil {
+			return err
+		}
+	}
+
+	if _, err := w.Write([]byte(">")); err != nil {
+		return err
+	}
+
+	if d.void {
+		return nil
+	}
+
+	// children
+	for _, child := range d.children {
+		if err := child.Render(w); err != nil {
+			return err
+		}
+	}
+
+	// closing tag
+	if _, err := w.Write([]byte("</")); err != nil {
+		return err
+	}
+	if _, err := w.Write([]byte(d.tag)); err != nil {
+		return err
+	}
+	if _, err := w.Write([]byte(">")); err != nil {
+		return err
+	}
+
+	return nil
 }

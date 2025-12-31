@@ -3,8 +3,8 @@ package gml
 import "io"
 
 type HtmlElement interface {
-	Render() string
-	RenderStream(w io.Writer) error
+	RenderHtml() string
+	Render(w io.Writer) error
 }
 
 type Element struct {
@@ -22,5 +22,5 @@ type Attr struct {
 }
 
 type HtmlAttribute interface {
-	Render() string
+	RenderHtml() string
 }
