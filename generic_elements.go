@@ -1,4 +1,4 @@
-package html
+package gml
 
 func Html(attributes []Attr, children ...HtmlElement) Element {
 	return newElement("html", false, attributes, children...)
