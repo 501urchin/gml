@@ -7,26 +7,26 @@ import (
 )
 
 // text content
-type text struct {
+type content struct {
 	htmlString string
 }
 
-func Text(t string) text {
-	return text{htmlString: t}
+func Content(t string) content {
+	return content{htmlString: t}
 }
 
-func (t text) Attributes(_ ...Attr) HtmlElement {
+func (t content) Attributes(_ ...Attr) HtmlElement {
 	return nil
 }
-func (t text) Children(_ ...HtmlElement) HtmlElement {
+func (t content) Children(_ ...HtmlElement) HtmlElement {
 	return nil
 }
 
-func (t text) RenderHtml(ctx context.Context) string {
+func (t content) RenderHtml(ctx context.Context) string {
 	return t.htmlString
 }
 
-func (t text) Render(_ context.Context, w io.Writer) error {
+func (t content) Render(_ context.Context, w io.Writer) error {
 	_, err := w.Write([]byte(t.htmlString))
 	return err
 }
