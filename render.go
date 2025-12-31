@@ -1,17 +1,22 @@
 package gml
 
 import (
+	"bytes"
+	"context"
 	"io"
-	"strings"
+	"slices"
 )
 
-func newElement(tag string, void bool, attributes []Attr, children ...HtmlElement) Element {
+func newElement(tag string, void bool) *Element {
 	elm := Element{}
 	elm.tag = tag
 	elm.void = void
+	return &elm
+}
 
+func (elm *Element) Attributes(attributes ...Attr) HtmlElement {
 	if l := len(attributes); l != 0 {
-		elm.attributes = make([]Attr, 0, l)
+		elm.attributes = slices.Grow(elm.attributes, l)
 
 		for _, attr := range attributes {
 			elm.attributes = append(elm.attributes, attr)
@@ -20,58 +25,32 @@ func newElement(tag string, void bool, attributes []Attr, children ...HtmlElemen
 		}
 	}
 
+	return elm
+}
+func (elm *Element) Children(children ...HtmlElement) HtmlElement {
+	if elm.void {
+		return elm
+	}
+
 	if l := len(children); l != 0 {
-		elm.children = make([]HtmlElement, 0, l)
+		elm.children = slices.Grow(elm.children, l)
 		elm.children = append(elm.children, children...)
 	}
 
 	return elm
 }
 
-func (d Element) RenderHtml() string {
-	var builder strings.Builder
-
-	if d.tag == "" {
+func (d *Element) RenderHtml(ctx context.Context) string {
+	var builder bytes.Buffer
+	err := d.Render(ctx, &builder)
+	if err != nil {
 		return ""
 	}
-
-	l := len(d.attributes)
-	builder.Grow(
-		6 + (2 * len(d.tag)) + // opening and closing tag
-			l + // space rune between attr
-			d.attrKeysLen +
-			d.attrValuesLen,
-	)
-
-	builder.WriteRune('<')
-	builder.WriteString(d.tag)
-
-	// render child attributes
-	for _, attr := range d.attributes {
-		builder.WriteRune(' ')
-		builder.WriteString(attr.RenderHtml())
-	}
-	builder.WriteString(">")
-
-	// if the elm is void (self closing) return early since it wont have children or a closing tag
-	if d.void {
-		return builder.String()
-	}
-
-	// render child elements
-	for _, child := range d.children {
-		builder.WriteString(child.RenderHtml())
-	}
-
-	// closing tag
-	builder.WriteString("</")
-	builder.WriteString(d.tag)
-	builder.WriteRune('>')
 
 	return builder.String()
 }
 
-func (d Element) Render(w io.Writer) error {
+func (d *Element) Render(ctx context.Context, w io.Writer) error {
 	if d.tag == "" {
 		return nil
 	}
@@ -80,18 +59,25 @@ func (d Element) Render(w io.Writer) error {
 	if _, err := w.Write([]byte("<")); err != nil {
 		return err
 	}
+
 	if _, err := w.Write([]byte(d.tag)); err != nil {
 		return err
 	}
 
 	// attributes
 	for _, attr := range d.attributes {
-		if _, err := w.Write([]byte(" ")); err != nil {
-			return err
+		select {
+		case <-ctx.Done():
+			return ctx.Err()
+		default:
+			if _, err := w.Write([]byte(" ")); err != nil {
+				return err
+			}
+			if _, err := w.Write([]byte(attr.RenderHtml())); err != nil {
+				return err
+			}
 		}
-		if _, err := w.Write([]byte(attr.RenderHtml())); err != nil {
-			return err
-		}
+
 	}
 
 	if _, err := w.Write([]byte(">")); err != nil {
@@ -104,9 +90,15 @@ func (d Element) Render(w io.Writer) error {
 
 	// children
 	for _, child := range d.children {
-		if err := child.Render(w); err != nil {
-			return err
+		select {
+		case <-ctx.Done():
+			return ctx.Err()
+		default:
+			if err := child.Render(ctx, w); err != nil {
+				return err
+			}
 		}
+
 	}
 
 	// closing tag

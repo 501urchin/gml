@@ -1,10 +1,15 @@
 package gml
 
-import "io"
+import (
+	"context"
+	"io"
+)
 
 type HtmlElement interface {
-	RenderHtml() string
-	Render(w io.Writer) error
+	Attributes(attributes ...Attr) HtmlElement
+	Children(children ...HtmlElement) HtmlElement
+	RenderHtml(ctx context.Context) string
+	Render(ctx context.Context, w io.Writer) error
 }
 
 type Element struct {
@@ -19,8 +24,4 @@ type Element struct {
 type Attr struct {
 	Key   string
 	Value string
-}
-
-type HtmlAttribute interface {
-	RenderHtml() string
 }

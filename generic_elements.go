@@ -1,486 +1,486 @@
 package gml
 
 // <html { attr }> { children } </html>
-func Html(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("html", false, attributes, children...)
+func Html() *Element {
+	return newElement("html", false)
 }
 
 // <head { attr }> { children } </head>
-func Head(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("head", false, attributes, children...)
+func Head() *Element {
+	return newElement("head", false)
 }
 
 // <body { attr }> { children } </body>
-func Body(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("body", false, attributes, children...)
+func Body() *Element {
+	return newElement("body", false)
 }
 
 // <article { attr }> { children } </article>
-func Article(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("article", false, attributes, children...)
+func Article() *Element {
+	return newElement("article", false)
 }
 
 // <aside { attr }> { children } </aside>
-func Aside(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("aside", false, attributes, children...)
+func Aside() *Element {
+	return newElement("aside", false)
 }
 
 // <details { attr }> { children } </details>
-func Details(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("details", false, attributes, children...)
+func Details() *Element {
+	return newElement("details", false)
 }
 
 // <div { attr }> { children } </div>
-func Div(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("div", false, attributes, children...)
+func Div() *Element {
+	return newElement("div", false)
 }
 
 // <header { attr }> { children } </header>
-func Header(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("header", false, attributes, children...)
+func Header() *Element {
+	return newElement("header", false)
 }
 
 // <hgroup { attr }> { children } </hgroup>
-func Hgroup(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("hgroup", false, attributes, children...)
+func Hgroup() *Element {
+	return newElement("hgroup", false)
 }
 
 // <h1 { attr }> { children } </h1>
-func H1(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("h1", false, attributes, children...)
+func H1() *Element {
+	return newElement("h1", false)
 }
 
 // <h2 { attr }> { children } </h2>
-func H2(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("h2", false, attributes, children...)
+func H2() *Element {
+	return newElement("h2", false)
 }
 
 // <h3 { attr }> { children } </h3>
-func H3(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("h3", false, attributes, children...)
+func H3() *Element {
+	return newElement("h3", false)
 }
 
 // <h4 { attr }> { children } </h4>
-func H4(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("h4", false, attributes, children...)
+func H4() *Element {
+	return newElement("h4", false)
 }
 
 // <h5 { attr }> { children } </h5>
-func H5(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("h5", false, attributes, children...)
+func H5() *Element {
+	return newElement("h5", false)
 }
 
 // <h6 { attr }> { children } </h6>
-func H6(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("h6", false, attributes, children...)
+func H6() *Element {
+	return newElement("h6", false)
 }
 
 // <footer { attr }> { children } </footer>
-func Footer(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("footer", false, attributes, children...)
+func Footer() *Element {
+	return newElement("footer", false)
 }
 
 // <main { attr }> { children } </main>
-func Main(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("main", false, attributes, children...)
+func Main() *Element {
+	return newElement("main", false)
 }
 
 // <nav { attr }> { children } </nav>
-func Nav(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("nav", false, attributes, children...)
+func Nav() *Element {
+	return newElement("nav", false)
 }
 
 // <p { attr }> { children } </p>
-func P(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("p", false, attributes, children...)
+func P() *Element {
+	return newElement("p", false)
 }
 
 // <section { attr }> { children } </section>
-func Section(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("section", false, attributes, children...)
+func Section() *Element {
+	return newElement("section", false)
 }
 
 // <span { attr }> { children } </span>
-func Span(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("span", false, attributes, children...)
+func Span() *Element {
+	return newElement("span", false)
 }
 
 // <summary { attr }> { children } </summary>
-func Summary(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("summary", false, attributes, children...)
+func Summary() *Element {
+	return newElement("summary", false)
 }
 
 // <style { attr }> { children } </style>
-func Style(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("style", false, attributes, children...)
+func Style() *Element {
+	return newElement("style", false)
 }
 
 // <title { attr }> { children } </title>
-func Title(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("title", false, attributes, children...)
+func Title() *Element {
+	return newElement("title", false)
 }
 
 // <button { attr }> { children } </button>
-func Button(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("button", false, attributes, children...)
+func Button() *Element {
+	return newElement("button", false)
 }
 
 // <datalist { attr }> { children } </datalist>
-func Datalist(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("datalist", false, attributes, children...)
+func Datalist() *Element {
+	return newElement("datalist", false)
 }
 
 // <dialog { attr }> { children } </dialog>
-func Dialog(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("dialog", false, attributes, children...)
+func Dialog() *Element {
+	return newElement("dialog", false)
 }
 
 // <fieldset { attr }> { children } </fieldset>
-func Fieldset(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("fieldset", false, attributes, children...)
+func Fieldset() *Element {
+	return newElement("fieldset", false)
 }
 
 // <form { attr }> { children } </form>
-func Form(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("form", false, attributes, children...)
+func Form() *Element {
+	return newElement("form", false)
 }
 
 // <label { attr }> { children } </label>
-func Label(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("label", false, attributes, children...)
+func Label() *Element {
+	return newElement("label", false)
 }
 
 // <legend { attr }> { children } </legend>
-func Legend(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("legend", false, attributes, children...)
+func Legend() *Element {
+	return newElement("legend", false)
 }
 
 // <meter { attr }> { children } </meter>
-func Meter(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("meter", false, attributes, children...)
+func Meter() *Element {
+	return newElement("meter", false)
 }
 
 // <optgroup { attr }> { children } </optgroup>
-func Optgroup(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("optgroup", false, attributes, children...)
+func Optgroup() *Element {
+	return newElement("optgroup", false)
 }
 
 // <option { attr }> { children } </option>
-func Option(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("option", false, attributes, children...)
+func Option() *Element {
+	return newElement("option", false)
 }
 
 // <select { attr }> { children } </select>
-func Select(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("select", false, attributes, children...)
+func Select() *Element {
+	return newElement("select", false)
 }
 
 // <textarea { attr }> { children } </textarea>
-func Textarea(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("textarea", false, attributes, children...)
+func Textarea() *Element {
+	return newElement("textarea", false)
 }
 
 // <output { attr }> { children } </output>
-func Output(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("output", false, attributes, children...)
+func Output() *Element {
+	return newElement("output", false)
 }
 
 // <progress { attr }> { children } </progress>
-func Progress(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("progress", false, attributes, children...)
+func Progress() *Element {
+	return newElement("progress", false)
 }
 
 // <abbr { attr }> { children } </abbr>
-func Abbr(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("abbr", false, attributes, children...)
+func Abbr() *Element {
+	return newElement("abbr", false)
 }
 
 // <address { attr }> { children } </address>
-func Address(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("address", false, attributes, children...)
+func Address() *Element {
+	return newElement("address", false)
 }
 
 // <b { attr }> { children } </b>
-func B(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("b", false, attributes, children...)
+func B() *Element {
+	return newElement("b", false)
 }
 
 // <bdi { attr }> { children } </bdi>
-func Bdi(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("bdi", false, attributes, children...)
+func Bdi() *Element {
+	return newElement("bdi", false)
 }
 
 // <bdo { attr }> { children } </bdo>
-func Bdo(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("bdo", false, attributes, children...)
+func Bdo() *Element {
+	return newElement("bdo", false)
 }
 
 // <blockquote { attr }> { children } </blockquote>
-func Blockquote(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("blockquote", false, attributes, children...)
+func Blockquote() *Element {
+	return newElement("blockquote", false)
 }
 
 // <cite { attr }> { children } </cite>
-func Cite(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("cite", false, attributes, children...)
+func Cite() *Element {
+	return newElement("cite", false)
 }
 
 // <code { attr }> { children } </code>
-func Code(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("code", false, attributes, children...)
+func Code() *Element {
+	return newElement("code", false)
 }
 
 // <data { attr }> { children } </data>
-func Data(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("data", false, attributes, children...)
+func Data() *Element {
+	return newElement("data", false)
 }
 
 // <del { attr }> { children } </del>
-func Del(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("del", false, attributes, children...)
+func Del() *Element {
+	return newElement("del", false)
 }
 
 // <dfn { attr }> { children } </dfn>
-func Dfn(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("dfn", false, attributes, children...)
+func Dfn() *Element {
+	return newElement("dfn", false)
 }
 
 // <em { attr }> { children } </em>
-func Em(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("em", false, attributes, children...)
+func Em() *Element {
+	return newElement("em", false)
 }
 
 // <i { attr }> { children } </i>
-func I(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("i", false, attributes, children...)
+func I() *Element {
+	return newElement("i", false)
 }
 
 // <ins { attr }> { children } </ins>
-func Ins(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("ins", false, attributes, children...)
+func Ins() *Element {
+	return newElement("ins", false)
 }
 
 // <kbd { attr }> { children } </kbd>
-func Kbd(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("kbd", false, attributes, children...)
+func Kbd() *Element {
+	return newElement("kbd", false)
 }
 
 // <mark { attr }> { children } </mark>
-func Mark(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("mark", false, attributes, children...)
+func Mark() *Element {
+	return newElement("mark", false)
 }
 
 // <pre { attr }> { children } </pre>
-func Pre(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("pre", false, attributes, children...)
+func Pre() *Element {
+	return newElement("pre", false)
 }
 
 // <q { attr }> { children } </q>
-func Q(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("q", false, attributes, children...)
+func Q() *Element {
+	return newElement("q", false)
 }
 
 // <rp { attr }> { children } </rp>
-func Rp(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("rp", false, attributes, children...)
+func Rp() *Element {
+	return newElement("rp", false)
 }
 
 // <rt { attr }> { children } </rt>
-func Rt(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("rt", false, attributes, children...)
+func Rt() *Element {
+	return newElement("rt", false)
 }
 
 // <ruby { attr }> { children } </ruby>
-func Ruby(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("ruby", false, attributes, children...)
+func Ruby() *Element {
+	return newElement("ruby", false)
 }
 
 // <s { attr }> { children } </s>
-func S(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("s", false, attributes, children...)
+func S() *Element {
+	return newElement("s", false)
 }
 
 // <samp { attr }> { children } </samp>
-func Samp(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("samp", false, attributes, children...)
+func Samp() *Element {
+	return newElement("samp", false)
 }
 
 // <small { attr }> { children } </small>
-func Small(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("small", false, attributes, children...)
+func Small() *Element {
+	return newElement("small", false)
 }
 
 // <strong { attr }> { children } </strong>
-func Strong(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("strong", false, attributes, children...)
+func Strong() *Element {
+	return newElement("strong", false)
 }
 
 // <sub { attr }> { children } </sub>
-func Sub(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("sub", false, attributes, children...)
+func Sub() *Element {
+	return newElement("sub", false)
 }
 
 // <sup { attr }> { children } </sup>
-func Sup(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("sup", false, attributes, children...)
+func Sup() *Element {
+	return newElement("sup", false)
 }
 
 // <u { attr }> { children } </u>
-func U(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("u", false, attributes, children...)
+func U() *Element {
+	return newElement("u", false)
 }
 
 // <var { attr }> { children } </var>
-func Var(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("var", false, attributes, children...)
+func Var() *Element {
+	return newElement("var", false)
 }
 
 // <dd { attr }> { children } </dd>
-func Dd(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("dd", false, attributes, children...)
+func Dd() *Element {
+	return newElement("dd", false)
 }
 
 // <dl { attr }> { children } </dl>
-func Dl(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("dl", false, attributes, children...)
+func Dl() *Element {
+	return newElement("dl", false)
 }
 
 // <dt { attr }> { children } </dt>
-func Dt(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("dt", false, attributes, children...)
+func Dt() *Element {
+	return newElement("dt", false)
 }
 
 // <li { attr }> { children } </li>
-func Li(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("li", false, attributes, children...)
+func Li() *Element {
+	return newElement("li", false)
 }
 
 // <ol { attr }> { children } </ol>
-func Ol(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("ol", false, attributes, children...)
+func Ol() *Element {
+	return newElement("ol", false)
 }
 
 // <menu { attr }> { children } </menu>
-func Menu(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("menu", false, attributes, children...)
+func Menu() *Element {
+	return newElement("menu", false)
 }
 
 // <ul { attr }> { children } </ul>
-func Ul(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("ul", false, attributes, children...)
+func Ul() *Element {
+	return newElement("ul", false)
 }
 
 // <caption { attr }> { children } </caption>
-func Caption(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("caption", false, attributes, children...)
+func Caption() *Element {
+	return newElement("caption", false)
 }
 
 // <colgroup { attr }> { children } </colgroup>
-func Colgroup(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("colgroup", false, attributes, children...)
+func Colgroup() *Element {
+	return newElement("colgroup", false)
 }
 
 // <table { attr }> { children } </table>
-func Table(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("table", false, attributes, children...)
+func Table() *Element {
+	return newElement("table", false)
 }
 
 // <tbody { attr }> { children } </tbody>
-func Tbody(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("tbody", false, attributes, children...)
+func Tbody() *Element {
+	return newElement("tbody", false)
 }
 
 // <td { attr }> { children } </td>
-func Td(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("td", false, attributes, children...)
+func Td() *Element {
+	return newElement("td", false)
 }
 
 // <tfoot { attr }> { children } </tfoot>
-func Tfoot(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("tfoot", false, attributes, children...)
+func Tfoot() *Element {
+	return newElement("tfoot", false)
 }
 
 // <thead { attr }> { children } </thead>
-func Thead(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("thead", false, attributes, children...)
+func Thead() *Element {
+	return newElement("thead", false)
 }
 
 // <th { attr }> { children } </th>
-func Th(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("th", false, attributes, children...)
+func Th() *Element {
+	return newElement("th", false)
 }
 
 // <tr { attr }> { children } </tr>
-func Tr(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("tr", false, attributes, children...)
+func Tr() *Element {
+	return newElement("tr", false)
 }
 
 // <noscript { attr }> { children } </noscript>
-func Noscript(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("noscript", false, attributes, children...)
+func Noscript() *Element {
+	return newElement("noscript", false)
 }
 
 // <script { attr }> { children } </script>
-func Script(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("script", false, attributes, children...)
+func Script() *Element {
+	return newElement("script", false)
 }
 
 // <template { attr }> { children } </template>
-func Template(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("template", false, attributes, children...)
+func Template() *Element {
+	return newElement("template", false)
 }
 
 // <audio { attr }> { children } </audio>
-func Audio(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("audio", false, attributes, children...)
+func Audio() *Element {
+	return newElement("audio", false)
 }
 
 // <canvas { attr }> { children } </canvas>
-func Canvas(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("canvas", false, attributes, children...)
+func Canvas() *Element {
+	return newElement("canvas", false)
 }
 
 // <figcaption { attr }> { children } </figcaption>
-func Figcaption(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("figcaption", false, attributes, children...)
+func Figcaption() *Element {
+	return newElement("figcaption", false)
 }
 
 // <figure { attr }> { children } </figure>
-func Figure(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("figure", false, attributes, children...)
+func Figure() *Element {
+	return newElement("figure", false)
 }
 
 // <iframe { attr }> { children } </iframe>
-func Iframe(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("iframe", false, attributes, children...)
+func Iframe() *Element {
+	return newElement("iframe", false)
 }
 
 // <map { attr }> { children } </map>
-func Map(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("map", false, attributes, children...)
+func Map() *Element {
+	return newElement("map", false)
 }
 
 // <object { attr }> { children } </object>
-func Object(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("object", false, attributes, children...)
+func Object() *Element {
+	return newElement("object", false)
 }
 
 // <picture { attr }> { children } </picture>
-func Picture(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("picture", false, attributes, children...)
+func Picture() *Element {
+	return newElement("picture", false)
 }
 
 // <svg { attr }> { children } </svg>
-func Svg(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("svg", false, attributes, children...)
+func Svg() *Element {
+	return newElement("svg", false)
 }
 
 // <time { attr }> { children } </time>
-func Time(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("time", false, attributes, children...)
+func Time() *Element {
+	return newElement("time", false)
 }
 
 // <video { attr }> { children } </video>
-func Video(attributes []Attr, children ...HtmlElement) Element {
-	return newElement("video", false, attributes, children...)
+func Video() *Element {
+	return newElement("video", false)
 }

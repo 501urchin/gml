@@ -1,71 +1,71 @@
 package gml
 
 // <br { attr }>
-func Br(attributes []Attr) Element {
-	return newElement("br", true, attributes)
+func Br() *Element {
+	return newElement("br", true)
 }
 
 // <hr { attr }>
-func Hr(attributes []Attr) Element {
-	return newElement("hr", true, attributes)
+func Hr() *Element {
+	return newElement("hr", true)
 }
 
 // <base { attr }>
-func Base(attributes []Attr) Element {
-	return newElement("base", true, attributes)
+func Base() *Element {
+	return newElement("base", true)
 }
 
 // <link { attr }>
-func Link(attributes []Attr) Element {
-	return newElement("link", true, attributes)
+func Link() *Element {
+	return newElement("link", true)
 }
 
 // <meta { attr }>
-func Meta(attributes []Attr) Element {
-	return newElement("meta", true, attributes)
+func Meta() *Element {
+	return newElement("meta", true)
 }
 
 // <input { attr }>
-func Input(attributes []Attr) Element {
-	return newElement("input", true, attributes)
+func Input() *Element {
+	return newElement("input", true)
 }
 
 // <wbr { attr }>
-func Wbr(attributes []Attr) Element {
-	return newElement("wbr", true, attributes)
+func Wbr() *Element {
+	return newElement("wbr", true)
 }
 
 // <col { attr }>
-func Col(attributes []Attr) Element {
-	return newElement("col", true, attributes)
+func Col() *Element {
+	return newElement("col", true)
 }
 
 // <area { attr }>
-func Area(attributes []Attr) Element {
-	return newElement("area", true, attributes)
+func Area() *Element {
+	return newElement("area", true)
 }
 
 // <embed { attr }>
-func Embed(attributes []Attr) Element {
-	return newElement("embed", true, attributes)
+func Embed() *Element {
+	return newElement("embed", true)
 }
 
 // <img { attr }>
-func Img(attributes []Attr) Element {
-	return newElement("img", true, attributes)
+func Img() *Element {
+	return newElement("img", true)
 }
 
 // <param { attr }>
-func Param(attributes []Attr) Element {
-	return newElement("param", true, attributes)
+func Param() *Element {
+	return newElement("param", true)
 }
 
 // <source { attr }>
-func Source(attributes []Attr) Element {
-	return newElement("source", true, attributes)
+func Source() *Element {
+	return newElement("source", true)
 }
 
 // <track { attr }>
-func Track(attributes []Attr) Element {
-	return newElement("track", true, attributes)
+func Track() *Element {
+	return newElement("track", true)
 }
