@@ -150,8 +150,12 @@ func BenchmarkRender(b *testing.B) {
 								for i := range 3 {
 									buf = append(buf,
 										P().
-											Attributes(Attribute("class", "text-white col-span-full text-center text-sm")).
-											Children(Text(strconv.Itoa(i))),
+											Attributes(
+												Attribute("class", "text-white col-span-full text-center text-sm"),
+											).
+											Children(
+												Text(strconv.Itoa(i)),
+											),
 									)
 								}
 								return buf
