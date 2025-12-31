@@ -3,26 +3,25 @@ package gml
 import (
 	"bytes"
 	"os"
-	"strconv"
 	"testing"
 )
 
-func TestElement(t *testing.T) {
+func TestGmlElement(t *testing.T) {
 	expected := `<h1 class="text-white">hello</h1>`
 
 	attributes := []Attr{{Key: "class", Value: "text-white"}}
 	childElm := Content("hello")
 	void := false
-	elementTag := "h1"
+	gmlElementTag := "h1"
 
-	v := newElement(elementTag, void).Attributes(attributes...).Children(childElm)
-	elm, ok := v.(*Element)
+	v := newgmlElement(gmlElementTag, void).Attributes(attributes...).Children(childElm)
+	elm, ok := v.(*gmlElement)
 	if !ok {
-		t.Fatal("failed to cast newElement as *Element")
+		t.Fatal("failed to cast newgmlElement as *gmlElement")
 	}
 
-	if elm.tag != elementTag {
-		t.Errorf("tag mismatch: expected %q, got %q", elementTag, elm.tag)
+	if elm.tag != gmlElementTag {
+		t.Errorf("tag mismatch: expected %q, got %q", gmlElementTag, elm.tag)
 	}
 
 	if len(elm.children) != 1 {
@@ -42,7 +41,7 @@ func TestElement(t *testing.T) {
 	}
 
 	t.Run("render empty tag", func(t *testing.T) {
-		html := newElement("", void).RenderHtml(t.Context())
+		html := newgmlElement("", void).RenderHtml(t.Context())
 		if html != "" {
 			t.Errorf("render empty tag mismatch: expected empty string, got %q", html)
 		}
@@ -67,12 +66,39 @@ func TestElement(t *testing.T) {
 		}
 	})
 
+	t.Run("render nil as empty", func(t *testing.T) {
+		elm := Div().Children(
+			childElm,
+			nil,
+		)
+
+		html := elm.RenderHtml(t.Context())
+
+		if html != "<div>"+childElm.RenderHtml(t.Context())+"</div>" {
+			t.Error("function rendered a nil value")
+		}
+	})
+
+	t.Run("nil receiver", func(t *testing.T) {
+		defer func() {
+			err := recover()
+			if err != nil {
+				t.Error("function failed to do nil checks and caused a panic")
+			}
+		}()
+
+		var elm *gmlElement = nil
+
+		elm.RenderHtml(t.Context())
+	})
+
 }
 
 func BenchmarkRender(b *testing.B) {
 	template := Html().
 		Attributes(Attribute("lang", "en")).
 		Children(
+			Empty(),
 			Head().
 				Children(
 					Meta().Attributes(Attribute("charset", "UTF-8")),
@@ -144,22 +170,6 @@ func BenchmarkRender(b *testing.B) {
 								Children(
 									Content("⟳"),
 								),
-
-							For(func() []HtmlElement {
-								var buf []HtmlElement
-								for i := range 3 {
-									buf = append(buf,
-										P().
-											Attributes(
-												Attribute("class", "text-white col-span-full text-center text-sm"),
-											).
-											Children(
-												Content(strconv.Itoa(i)),
-											),
-									)
-								}
-								return buf
-							}),
 						),
 				),
 		)

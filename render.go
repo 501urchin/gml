@@ -7,14 +7,14 @@ import (
 	"slices"
 )
 
-func newElement(tag string, void bool) *Element {
-	elm := Element{}
+func newgmlElement(tag string, void bool) *gmlElement {
+	elm := gmlElement{}
 	elm.tag = tag
 	elm.void = void
 	return &elm
 }
 
-func (elm *Element) Attributes(attributes ...Attr) HtmlElement {
+func (elm *gmlElement) Attributes(attributes ...Attr) GmlElement {
 	if l := len(attributes); l != 0 {
 		elm.attributes = slices.Grow(elm.attributes, l)
 
@@ -27,7 +27,7 @@ func (elm *Element) Attributes(attributes ...Attr) HtmlElement {
 
 	return elm
 }
-func (elm *Element) Children(children ...HtmlElement) HtmlElement {
+func (elm *gmlElement) Children(children ...GmlElement) GmlElement {
 	if elm.void {
 		return elm
 	}
@@ -40,7 +40,11 @@ func (elm *Element) Children(children ...HtmlElement) HtmlElement {
 	return elm
 }
 
-func (d *Element) RenderHtml(ctx context.Context) string {
+func (d *gmlElement) RenderHtml(ctx context.Context) string {
+	if d == nil || d.tag == "" {
+		return ""
+	}
+
 	var builder bytes.Buffer
 	err := d.Render(ctx, &builder)
 	if err != nil {
@@ -50,8 +54,8 @@ func (d *Element) RenderHtml(ctx context.Context) string {
 	return builder.String()
 }
 
-func (d *Element) Render(ctx context.Context, w io.Writer) error {
-	if d.tag == "" {
+func (d *gmlElement) renderInternal(ctx context.Context, w io.Writer, bestEffort bool) error {
+	if d == nil || d.tag == "" {
 		return nil
 	}
 
@@ -73,6 +77,7 @@ func (d *Element) Render(ctx context.Context, w io.Writer) error {
 			if _, err := w.Write([]byte(" ")); err != nil {
 				return err
 			}
+
 			if _, err := w.Write([]byte(attr.RenderHtml())); err != nil {
 				return err
 			}
@@ -94,11 +99,19 @@ func (d *Element) Render(ctx context.Context, w io.Writer) error {
 		case <-ctx.Done():
 			return ctx.Err()
 		default:
+			if child == nil {
+				continue
+			}
+
 			if err := child.Render(ctx, w); err != nil {
-				return err
+				if bestEffort {
+					continue
+				} else {
+
+					return err
+				}
 			}
 		}
-
 	}
 
 	// closing tag
@@ -113,4 +126,20 @@ func (d *Element) Render(ctx context.Context, w io.Writer) error {
 	}
 
 	return nil
+}
+
+func (d *gmlElement) Render(ctx context.Context, w io.Writer) error {
+	if d == nil || d.tag == "" {
+		return nil
+	}
+
+	return d.renderInternal(ctx, w, false)
+}
+
+func (d *gmlElement) RenderBestEffort(ctx context.Context, w io.Writer) error {
+	if d == nil || d.tag == "" {
+		return nil
+	}
+
+	return d.renderInternal(ctx, w, true)
 }

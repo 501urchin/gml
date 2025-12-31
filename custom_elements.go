@@ -1,7 +1,6 @@
 package gml
 
 import (
-	"bytes"
 	"context"
 	"io"
 )
@@ -11,17 +10,17 @@ type content struct {
 	htmlString string
 }
 
-// Content creates a content struct representing the inner content of an HTML element.
+// Content creates a content struct representing the inner content of an HTML gmlElement.
 // It can also be used to render raw HTML strings directly.
 func Content(t string) content {
 	return content{htmlString: t}
 }
 
-func (t content) Attributes(_ ...Attr) HtmlElement {
-	return nil
+func (t content) Attributes(_ ...Attr) GmlElement {
+	return t
 }
-func (t content) Children(_ ...HtmlElement) HtmlElement {
-	return nil
+func (t content) Children(_ ...GmlElement) GmlElement {
+	return t
 }
 
 func (t content) RenderHtml(ctx context.Context) string {
@@ -33,41 +32,30 @@ func (t content) Render(_ context.Context, w io.Writer) error {
 	return err
 }
 
-// for loop
-type forComponent struct {
-	elements []HtmlElement
+func (t content) RenderBestEffort(_ context.Context, w io.Writer) error {
+	_, err := w.Write([]byte(t.htmlString))
+	return err
 }
 
-func For(fn func() []HtmlElement) *forComponent {
-	return &forComponent{elements: fn()}
+// empty element
+type empty struct{}
+
+func Empty() empty {
+	return empty{}
+}
+func (e empty) Attributes(attributes ...Attr) GmlElement {
+	return e
+}
+func (e empty) Children(children ...GmlElement) GmlElement {
+	return e
 }
 
-func (t *forComponent) Attributes(_ ...Attr) HtmlElement {
+func (empty) RenderHtml(ctx context.Context) string {
+	return ""
+}
+func (empty) Render(ctx context.Context, w io.Writer) error {
 	return nil
 }
-func (t *forComponent) Children(_ ...HtmlElement) HtmlElement {
-	return nil
-}
-
-func (t *forComponent) RenderHtml(ctx context.Context) string {
-	var buf bytes.Buffer
-	for _, elm := range t.elements {
-		err := elm.Render(ctx, &buf)
-		if err != nil {
-			return ""
-		}
-	}
-
-	return buf.String()
-}
-
-func (t *forComponent) Render(ctx context.Context, w io.Writer) error {
-	for _, elm := range t.elements {
-		err := elm.Render(ctx, w)
-		if err != nil {
-			return err
-		}
-	}
-
+func (empty) RenderBestEffort(ctx context.Context, w io.Writer) error {
 	return nil
 }

@@ -1,486 +1,486 @@
 package gml
 
 // <html { attr }> { children } </html>
-func Html() *Element {
-	return newElement("html", false)
+func Html() *gmlElement {
+	return newgmlElement("html", false)
 }
 
 // <head { attr }> { children } </head>
-func Head() *Element {
-	return newElement("head", false)
+func Head() *gmlElement {
+	return newgmlElement("head", false)
 }
 
 // <body { attr }> { children } </body>
-func Body() *Element {
-	return newElement("body", false)
+func Body() *gmlElement {
+	return newgmlElement("body", false)
 }
 
 // <article { attr }> { children } </article>
-func Article() *Element {
-	return newElement("article", false)
+func Article() *gmlElement {
+	return newgmlElement("article", false)
 }
 
 // <aside { attr }> { children } </aside>
-func Aside() *Element {
-	return newElement("aside", false)
+func Aside() *gmlElement {
+	return newgmlElement("aside", false)
 }
 
 // <details { attr }> { children } </details>
-func Details() *Element {
-	return newElement("details", false)
+func Details() *gmlElement {
+	return newgmlElement("details", false)
 }
 
 // <div { attr }> { children } </div>
-func Div() *Element {
-	return newElement("div", false)
+func Div() *gmlElement {
+	return newgmlElement("div", false)
 }
 
 // <header { attr }> { children } </header>
-func Header() *Element {
-	return newElement("header", false)
+func Header() *gmlElement {
+	return newgmlElement("header", false)
 }
 
 // <hgroup { attr }> { children } </hgroup>
-func Hgroup() *Element {
-	return newElement("hgroup", false)
+func Hgroup() *gmlElement {
+	return newgmlElement("hgroup", false)
 }
 
 // <h1 { attr }> { children } </h1>
-func H1() *Element {
-	return newElement("h1", false)
+func H1() *gmlElement {
+	return newgmlElement("h1", false)
 }
 
 // <h2 { attr }> { children } </h2>
-func H2() *Element {
-	return newElement("h2", false)
+func H2() *gmlElement {
+	return newgmlElement("h2", false)
 }
 
 // <h3 { attr }> { children } </h3>
-func H3() *Element {
-	return newElement("h3", false)
+func H3() *gmlElement {
+	return newgmlElement("h3", false)
 }
 
 // <h4 { attr }> { children } </h4>
-func H4() *Element {
-	return newElement("h4", false)
+func H4() *gmlElement {
+	return newgmlElement("h4", false)
 }
 
 // <h5 { attr }> { children } </h5>
-func H5() *Element {
-	return newElement("h5", false)
+func H5() *gmlElement {
+	return newgmlElement("h5", false)
 }
 
 // <h6 { attr }> { children } </h6>
-func H6() *Element {
-	return newElement("h6", false)
+func H6() *gmlElement {
+	return newgmlElement("h6", false)
 }
 
 // <footer { attr }> { children } </footer>
-func Footer() *Element {
-	return newElement("footer", false)
+func Footer() *gmlElement {
+	return newgmlElement("footer", false)
 }
 
 // <main { attr }> { children } </main>
-func Main() *Element {
-	return newElement("main", false)
+func Main() *gmlElement {
+	return newgmlElement("main", false)
 }
 
 // <nav { attr }> { children } </nav>
-func Nav() *Element {
-	return newElement("nav", false)
+func Nav() *gmlElement {
+	return newgmlElement("nav", false)
 }
 
 // <p { attr }> { children } </p>
-func P() *Element {
-	return newElement("p", false)
+func P() *gmlElement {
+	return newgmlElement("p", false)
 }
 
 // <section { attr }> { children } </section>
-func Section() *Element {
-	return newElement("section", false)
+func Section() *gmlElement {
+	return newgmlElement("section", false)
 }
 
 // <span { attr }> { children } </span>
-func Span() *Element {
-	return newElement("span", false)
+func Span() *gmlElement {
+	return newgmlElement("span", false)
 }
 
 // <summary { attr }> { children } </summary>
-func Summary() *Element {
-	return newElement("summary", false)
+func Summary() *gmlElement {
+	return newgmlElement("summary", false)
 }
 
 // <style { attr }> { children } </style>
-func Style() *Element {
-	return newElement("style", false)
+func Style() *gmlElement {
+	return newgmlElement("style", false)
 }
 
 // <title { attr }> { children } </title>
-func Title() *Element {
-	return newElement("title", false)
+func Title() *gmlElement {
+	return newgmlElement("title", false)
 }
 
 // <button { attr }> { children } </button>
-func Button() *Element {
-	return newElement("button", false)
+func Button() *gmlElement {
+	return newgmlElement("button", false)
 }
 
 // <datalist { attr }> { children } </datalist>
-func Datalist() *Element {
-	return newElement("datalist", false)
+func Datalist() *gmlElement {
+	return newgmlElement("datalist", false)
 }
 
 // <dialog { attr }> { children } </dialog>
-func Dialog() *Element {
-	return newElement("dialog", false)
+func Dialog() *gmlElement {
+	return newgmlElement("dialog", false)
 }
 
 // <fieldset { attr }> { children } </fieldset>
-func Fieldset() *Element {
-	return newElement("fieldset", false)
+func Fieldset() *gmlElement {
+	return newgmlElement("fieldset", false)
 }
 
 // <form { attr }> { children } </form>
-func Form() *Element {
-	return newElement("form", false)
+func Form() *gmlElement {
+	return newgmlElement("form", false)
 }
 
 // <label { attr }> { children } </label>
-func Label() *Element {
-	return newElement("label", false)
+func Label() *gmlElement {
+	return newgmlElement("label", false)
 }
 
 // <legend { attr }> { children } </legend>
-func Legend() *Element {
-	return newElement("legend", false)
+func Legend() *gmlElement {
+	return newgmlElement("legend", false)
 }
 
 // <meter { attr }> { children } </meter>
-func Meter() *Element {
-	return newElement("meter", false)
+func Meter() *gmlElement {
+	return newgmlElement("meter", false)
 }
 
 // <optgroup { attr }> { children } </optgroup>
-func Optgroup() *Element {
-	return newElement("optgroup", false)
+func Optgroup() *gmlElement {
+	return newgmlElement("optgroup", false)
 }
 
 // <option { attr }> { children } </option>
-func Option() *Element {
-	return newElement("option", false)
+func Option() *gmlElement {
+	return newgmlElement("option", false)
 }
 
 // <select { attr }> { children } </select>
-func Select() *Element {
-	return newElement("select", false)
+func Select() *gmlElement {
+	return newgmlElement("select", false)
 }
 
 // <textarea { attr }> { children } </textarea>
-func Textarea() *Element {
-	return newElement("textarea", false)
+func Textarea() *gmlElement {
+	return newgmlElement("textarea", false)
 }
 
 // <output { attr }> { children } </output>
-func Output() *Element {
-	return newElement("output", false)
+func Output() *gmlElement {
+	return newgmlElement("output", false)
 }
 
 // <progress { attr }> { children } </progress>
-func Progress() *Element {
-	return newElement("progress", false)
+func Progress() *gmlElement {
+	return newgmlElement("progress", false)
 }
 
 // <abbr { attr }> { children } </abbr>
-func Abbr() *Element {
-	return newElement("abbr", false)
+func Abbr() *gmlElement {
+	return newgmlElement("abbr", false)
 }
 
 // <address { attr }> { children } </address>
-func Address() *Element {
-	return newElement("address", false)
+func Address() *gmlElement {
+	return newgmlElement("address", false)
 }
 
 // <b { attr }> { children } </b>
-func B() *Element {
-	return newElement("b", false)
+func B() *gmlElement {
+	return newgmlElement("b", false)
 }
 
 // <bdi { attr }> { children } </bdi>
-func Bdi() *Element {
-	return newElement("bdi", false)
+func Bdi() *gmlElement {
+	return newgmlElement("bdi", false)
 }
 
 // <bdo { attr }> { children } </bdo>
-func Bdo() *Element {
-	return newElement("bdo", false)
+func Bdo() *gmlElement {
+	return newgmlElement("bdo", false)
 }
 
 // <blockquote { attr }> { children } </blockquote>
-func Blockquote() *Element {
-	return newElement("blockquote", false)
+func Blockquote() *gmlElement {
+	return newgmlElement("blockquote", false)
 }
 
 // <cite { attr }> { children } </cite>
-func Cite() *Element {
-	return newElement("cite", false)
+func Cite() *gmlElement {
+	return newgmlElement("cite", false)
 }
 
 // <code { attr }> { children } </code>
-func Code() *Element {
-	return newElement("code", false)
+func Code() *gmlElement {
+	return newgmlElement("code", false)
 }
 
 // <data { attr }> { children } </data>
-func Data() *Element {
-	return newElement("data", false)
+func Data() *gmlElement {
+	return newgmlElement("data", false)
 }
 
 // <del { attr }> { children } </del>
-func Del() *Element {
-	return newElement("del", false)
+func Del() *gmlElement {
+	return newgmlElement("del", false)
 }
 
 // <dfn { attr }> { children } </dfn>
-func Dfn() *Element {
-	return newElement("dfn", false)
+func Dfn() *gmlElement {
+	return newgmlElement("dfn", false)
 }
 
 // <em { attr }> { children } </em>
-func Em() *Element {
-	return newElement("em", false)
+func Em() *gmlElement {
+	return newgmlElement("em", false)
 }
 
 // <i { attr }> { children } </i>
-func I() *Element {
-	return newElement("i", false)
+func I() *gmlElement {
+	return newgmlElement("i", false)
 }
 
 // <ins { attr }> { children } </ins>
-func Ins() *Element {
-	return newElement("ins", false)
+func Ins() *gmlElement {
+	return newgmlElement("ins", false)
 }
 
 // <kbd { attr }> { children } </kbd>
-func Kbd() *Element {
-	return newElement("kbd", false)
+func Kbd() *gmlElement {
+	return newgmlElement("kbd", false)
 }
 
 // <mark { attr }> { children } </mark>
-func Mark() *Element {
-	return newElement("mark", false)
+func Mark() *gmlElement {
+	return newgmlElement("mark", false)
 }
 
 // <pre { attr }> { children } </pre>
-func Pre() *Element {
-	return newElement("pre", false)
+func Pre() *gmlElement {
+	return newgmlElement("pre", false)
 }
 
 // <q { attr }> { children } </q>
-func Q() *Element {
-	return newElement("q", false)
+func Q() *gmlElement {
+	return newgmlElement("q", false)
 }
 
 // <rp { attr }> { children } </rp>
-func Rp() *Element {
-	return newElement("rp", false)
+func Rp() *gmlElement {
+	return newgmlElement("rp", false)
 }
 
 // <rt { attr }> { children } </rt>
-func Rt() *Element {
-	return newElement("rt", false)
+func Rt() *gmlElement {
+	return newgmlElement("rt", false)
 }
 
 // <ruby { attr }> { children } </ruby>
-func Ruby() *Element {
-	return newElement("ruby", false)
+func Ruby() *gmlElement {
+	return newgmlElement("ruby", false)
 }
 
 // <s { attr }> { children } </s>
-func S() *Element {
-	return newElement("s", false)
+func S() *gmlElement {
+	return newgmlElement("s", false)
 }
 
 // <samp { attr }> { children } </samp>
-func Samp() *Element {
-	return newElement("samp", false)
+func Samp() *gmlElement {
+	return newgmlElement("samp", false)
 }
 
 // <small { attr }> { children } </small>
-func Small() *Element {
-	return newElement("small", false)
+func Small() *gmlElement {
+	return newgmlElement("small", false)
 }
 
 // <strong { attr }> { children } </strong>
-func Strong() *Element {
-	return newElement("strong", false)
+func Strong() *gmlElement {
+	return newgmlElement("strong", false)
 }
 
 // <sub { attr }> { children } </sub>
-func Sub() *Element {
-	return newElement("sub", false)
+func Sub() *gmlElement {
+	return newgmlElement("sub", false)
 }
 
 // <sup { attr }> { children } </sup>
-func Sup() *Element {
-	return newElement("sup", false)
+func Sup() *gmlElement {
+	return newgmlElement("sup", false)
 }
 
 // <u { attr }> { children } </u>
-func U() *Element {
-	return newElement("u", false)
+func U() *gmlElement {
+	return newgmlElement("u", false)
 }
 
 // <var { attr }> { children } </var>
-func Var() *Element {
-	return newElement("var", false)
+func Var() *gmlElement {
+	return newgmlElement("var", false)
 }
 
 // <dd { attr }> { children } </dd>
-func Dd() *Element {
-	return newElement("dd", false)
+func Dd() *gmlElement {
+	return newgmlElement("dd", false)
 }
 
 // <dl { attr }> { children } </dl>
-func Dl() *Element {
-	return newElement("dl", false)
+func Dl() *gmlElement {
+	return newgmlElement("dl", false)
 }
 
 // <dt { attr }> { children } </dt>
-func Dt() *Element {
-	return newElement("dt", false)
+func Dt() *gmlElement {
+	return newgmlElement("dt", false)
 }
 
 // <li { attr }> { children } </li>
-func Li() *Element {
-	return newElement("li", false)
+func Li() *gmlElement {
+	return newgmlElement("li", false)
 }
 
 // <ol { attr }> { children } </ol>
-func Ol() *Element {
-	return newElement("ol", false)
+func Ol() *gmlElement {
+	return newgmlElement("ol", false)
 }
 
 // <menu { attr }> { children } </menu>
-func Menu() *Element {
-	return newElement("menu", false)
+func Menu() *gmlElement {
+	return newgmlElement("menu", false)
 }
 
 // <ul { attr }> { children } </ul>
-func Ul() *Element {
-	return newElement("ul", false)
+func Ul() *gmlElement {
+	return newgmlElement("ul", false)
 }
 
 // <caption { attr }> { children } </caption>
-func Caption() *Element {
-	return newElement("caption", false)
+func Caption() *gmlElement {
+	return newgmlElement("caption", false)
 }
 
 // <colgroup { attr }> { children } </colgroup>
-func Colgroup() *Element {
-	return newElement("colgroup", false)
+func Colgroup() *gmlElement {
+	return newgmlElement("colgroup", false)
 }
 
 // <table { attr }> { children } </table>
-func Table() *Element {
-	return newElement("table", false)
+func Table() *gmlElement {
+	return newgmlElement("table", false)
 }
 
 // <tbody { attr }> { children } </tbody>
-func Tbody() *Element {
-	return newElement("tbody", false)
+func Tbody() *gmlElement {
+	return newgmlElement("tbody", false)
 }
 
 // <td { attr }> { children } </td>
-func Td() *Element {
-	return newElement("td", false)
+func Td() *gmlElement {
+	return newgmlElement("td", false)
 }
 
 // <tfoot { attr }> { children } </tfoot>
-func Tfoot() *Element {
-	return newElement("tfoot", false)
+func Tfoot() *gmlElement {
+	return newgmlElement("tfoot", false)
 }
 
 // <thead { attr }> { children } </thead>
-func Thead() *Element {
-	return newElement("thead", false)
+func Thead() *gmlElement {
+	return newgmlElement("thead", false)
 }
 
 // <th { attr }> { children } </th>
-func Th() *Element {
-	return newElement("th", false)
+func Th() *gmlElement {
+	return newgmlElement("th", false)
 }
 
 // <tr { attr }> { children } </tr>
-func Tr() *Element {
-	return newElement("tr", false)
+func Tr() *gmlElement {
+	return newgmlElement("tr", false)
 }
 
 // <noscript { attr }> { children } </noscript>
-func Noscript() *Element {
-	return newElement("noscript", false)
+func Noscript() *gmlElement {
+	return newgmlElement("noscript", false)
 }
 
 // <script { attr }> { children } </script>
-func Script() *Element {
-	return newElement("script", false)
+func Script() *gmlElement {
+	return newgmlElement("script", false)
 }
 
 // <template { attr }> { children } </template>
-func Template() *Element {
-	return newElement("template", false)
+func Template() *gmlElement {
+	return newgmlElement("template", false)
 }
 
 // <audio { attr }> { children } </audio>
-func Audio() *Element {
-	return newElement("audio", false)
+func Audio() *gmlElement {
+	return newgmlElement("audio", false)
 }
 
 // <canvas { attr }> { children } </canvas>
-func Canvas() *Element {
-	return newElement("canvas", false)
+func Canvas() *gmlElement {
+	return newgmlElement("canvas", false)
 }
 
 // <figcaption { attr }> { children } </figcaption>
-func Figcaption() *Element {
-	return newElement("figcaption", false)
+func Figcaption() *gmlElement {
+	return newgmlElement("figcaption", false)
 }
 
 // <figure { attr }> { children } </figure>
-func Figure() *Element {
-	return newElement("figure", false)
+func Figure() *gmlElement {
+	return newgmlElement("figure", false)
 }
 
 // <iframe { attr }> { children } </iframe>
-func Iframe() *Element {
-	return newElement("iframe", false)
+func Iframe() *gmlElement {
+	return newgmlElement("iframe", false)
 }
 
 // <map { attr }> { children } </map>
-func Map() *Element {
-	return newElement("map", false)
+func Map() *gmlElement {
+	return newgmlElement("map", false)
 }
 
 // <object { attr }> { children } </object>
-func Object() *Element {
-	return newElement("object", false)
+func Object() *gmlElement {
+	return newgmlElement("object", false)
 }
 
 // <picture { attr }> { children } </picture>
-func Picture() *Element {
-	return newElement("picture", false)
+func Picture() *gmlElement {
+	return newgmlElement("picture", false)
 }
 
 // <svg { attr }> { children } </svg>
-func Svg() *Element {
-	return newElement("svg", false)
+func Svg() *gmlElement {
+	return newgmlElement("svg", false)
 }
 
 // <time { attr }> { children } </time>
-func Time() *Element {
-	return newElement("time", false)
+func Time() *gmlElement {
+	return newgmlElement("time", false)
 }
 
 // <video { attr }> { children } </video>
-func Video() *Element {
-	return newElement("video", false)
+func Video() *gmlElement {
+	return newgmlElement("video", false)
 }

@@ -5,20 +5,21 @@ import (
 	"io"
 )
 
-type HtmlElement interface {
-	Attributes(attributes ...Attr) HtmlElement
-	Children(children ...HtmlElement) HtmlElement
+type GmlElement interface {
+	Attributes(attributes ...Attr) GmlElement
+	Children(children ...GmlElement) GmlElement
 	RenderHtml(ctx context.Context) string
 	Render(ctx context.Context, w io.Writer) error
+	RenderBestEffort(ctx context.Context, w io.Writer) error
 }
 
-type Element struct {
+type gmlElement struct {
 	void          bool
 	tag           string
 	attributes    []Attr
 	attrKeysLen   int
 	attrValuesLen int
-	children      []HtmlElement
+	children      []GmlElement
 }
 
 type Attr struct {

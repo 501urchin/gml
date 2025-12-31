@@ -1,71 +1,71 @@
 package gml
 
 // <br { attr }>
-func Br() *Element {
-	return newElement("br", true)
+func Br() *gmlElement {
+	return newgmlElement("br", true)
 }
 
 // <hr { attr }>
-func Hr() *Element {
-	return newElement("hr", true)
+func Hr() *gmlElement {
+	return newgmlElement("hr", true)
 }
 
 // <base { attr }>
-func Base() *Element {
-	return newElement("base", true)
+func Base() *gmlElement {
+	return newgmlElement("base", true)
 }
 
 // <link { attr }>
-func Link() *Element {
-	return newElement("link", true)
+func Link() *gmlElement {
+	return newgmlElement("link", true)
 }
 
 // <meta { attr }>
-func Meta() *Element {
-	return newElement("meta", true)
+func Meta() *gmlElement {
+	return newgmlElement("meta", true)
 }
 
 // <input { attr }>
-func Input() *Element {
-	return newElement("input", true)
+func Input() *gmlElement {
+	return newgmlElement("input", true)
 }
 
 // <wbr { attr }>
-func Wbr() *Element {
-	return newElement("wbr", true)
+func Wbr() *gmlElement {
+	return newgmlElement("wbr", true)
 }
 
 // <col { attr }>
-func Col() *Element {
-	return newElement("col", true)
+func Col() *gmlElement {
+	return newgmlElement("col", true)
 }
 
 // <area { attr }>
-func Area() *Element {
-	return newElement("area", true)
+func Area() *gmlElement {
+	return newgmlElement("area", true)
 }
 
 // <embed { attr }>
-func Embed() *Element {
-	return newElement("embed", true)
+func Embed() *gmlElement {
+	return newgmlElement("embed", true)
 }
 
 // <img { attr }>
-func Img() *Element {
-	return newElement("img", true)
+func Img() *gmlElement {
+	return newgmlElement("img", true)
 }
 
 // <param { attr }>
-func Param() *Element {
-	return newElement("param", true)
+func Param() *gmlElement {
+	return newgmlElement("param", true)
 }
 
 // <source { attr }>
-func Source() *Element {
-	return newElement("source", true)
+func Source() *gmlElement {
+	return newgmlElement("source", true)
 }
 
 // <track { attr }>
-func Track() *Element {
-	return newElement("track", true)
+func Track() *gmlElement {
+	return newgmlElement("track", true)
 }
