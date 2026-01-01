@@ -18,6 +18,12 @@ func (a Attr) RenderHtml() string {
 	return b.String()
 }
 
-func Attribute(key, value string) Attr {
-	return Attr{Key: key, Value: value}
+func Attribute(key string, value ...string) Attr {
+	a := Attr{Key: key}
+
+	if len(value) != 0 {
+		a.Value = value[0]
+	}
+	
+	return a
 }
