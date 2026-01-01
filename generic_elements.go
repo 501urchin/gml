@@ -15,6 +15,11 @@ func Body() *gmlElement {
 	return newgmlElement("body", false)
 }
 
+// <a { attr }> { children } </a>
+func A() *gmlElement {
+	return newgmlElement("a", false)
+}
+
 // <article { attr }> { children } </article>
 func Article() *gmlElement {
 	return newgmlElement("article", false)
