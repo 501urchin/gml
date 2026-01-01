@@ -25,4 +25,5 @@ type gmlElement struct {
 type Attr struct {
 	Key   string
 	Value string
+	raw   bool
 }
