@@ -1,7 +1,7 @@
 package gml
 
 import (
-	"bytes"
+	"io"
 )
 
 type Attr struct {
@@ -9,18 +9,33 @@ type Attr struct {
 	Value []byte
 }
 
-func (a Attr) RenderHtml() []byte {
-	var b bytes.Buffer
-	b.Grow(len(a.Key) + len(a.Value) + 3)
-	b.Write(a.Key)
+var attrBegin = []byte(`="`)
+var attrEnd = []byte(`"`)
+
+func (a Attr) Render(w io.Writer) (err error) {
+	_, err = w.Write(a.Key)
+	if err != nil {
+		return
+	}
 
 	if len(a.Value) != 0 {
-		b.WriteByte('=')
-		b.WriteByte('"')
-		b.Write(a.Value)
-		b.WriteByte('"')
+		_, err = w.Write(attrBegin)
+		if err != nil {
+			return
+		}
+
+		_, err = w.Write(a.Value)
+		if err != nil {
+			return
+		}
+
+		_, err = w.Write(attrEnd)
+		if err != nil {
+			return
+		}
 	}
-	return b.Bytes()
+
+	return nil
 }
 
 // escapes attributes by default

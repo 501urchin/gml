@@ -54,13 +54,18 @@ func (d *gmlElement) RenderHtml(ctx context.Context) string {
 	return builder.String()
 }
 
+var leftBracket = []byte("<")
+var rightBracket = []byte(">")
+var closingTag = []byte("</")
+var space = []byte(" ")
+
 func (d *gmlElement) renderInternal(ctx context.Context, w io.Writer, bestEffort bool) error {
 	if d == nil || d.tag == "" {
 		return nil
 	}
 
 	// open tag
-	if _, err := w.Write([]byte("<")); err != nil {
+	if _, err := w.Write(leftBracket); err != nil {
 		return err
 	}
 
@@ -74,18 +79,18 @@ func (d *gmlElement) renderInternal(ctx context.Context, w io.Writer, bestEffort
 		case <-ctx.Done():
 			return ctx.Err()
 		default:
-			if _, err := w.Write([]byte(" ")); err != nil {
+			if _, err := w.Write(space); err != nil {
 				return err
 			}
 
-			if _, err := w.Write(attr.RenderHtml()); err != nil {
+			if err := attr.Render(w); err != nil {
 				return err
 			}
 		}
 
 	}
 
-	if _, err := w.Write([]byte(">")); err != nil {
+	if _, err := w.Write(rightBracket); err != nil {
 		return err
 	}
 
@@ -115,13 +120,15 @@ func (d *gmlElement) renderInternal(ctx context.Context, w io.Writer, bestEffort
 	}
 
 	// closing tag
-	if _, err := w.Write([]byte("</")); err != nil {
+	if _, err := w.Write(closingTag); err != nil {
 		return err
 	}
+
 	if _, err := w.Write([]byte(d.tag)); err != nil {
 		return err
 	}
-	if _, err := w.Write([]byte(">")); err != nil {
+	
+	if _, err := w.Write(rightBracket); err != nil {
 		return err
 	}
 

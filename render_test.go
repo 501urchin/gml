@@ -94,87 +94,86 @@ func TestGmlElement(t *testing.T) {
 
 }
 
+var template = Html().
+	Attributes(Attribute("lang", "en")).
+	Children(
+		Empty(),
+		Head().
+			Children(
+				Meta().Attributes(Attribute("charset", "UTF-8")),
+				Meta().Attributes(
+					Attribute("name", "viewport"),
+					Attribute("content", "width=device-width, initial-scale=1.0"),
+				),
+				Meta().Attributes(
+					Attribute("name", "description"),
+					Attribute("content", "counter demo with gml"),
+				),
+				Title().Children(
+					Content("gml!!!!"),
+				),
+				Script().Attributes(
+					Attribute("src", "https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"),
+				),
+				Script().Attributes(
+					Attribute("src", "https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"),
+					Attribute("defer", ""),
+				),
+			),
+		Body().
+			Attributes(Attribute("class", "flex bg-black min-h-screen w-full items-center justify-center")).
+			Children(
+				Script().Children(
+					Content("console.log('Hello from GML !!!')"),
+				),
+				Main().
+					Attributes(
+						Attribute("x-data", "{'count': 0}"),
+						Attribute("class", "grid grid-cols-2 w-50 gap-2"),
+					).
+					Children(
+						P().
+							Attributes(
+								Attribute("x-text", "count"),
+								Attribute("class", "text-white bg-neutral-800 rounded-md p-1 col-span-2 text-center"),
+							).
+							Children(
+								Content("0"),
+							),
+
+						Button().
+							Attributes(
+								Attribute("@click", "count += 1"),
+								Attribute("class", "col-span-1 p-1 w-full cursor-pointer text-sm text-white select-none bg-neutral-900 rounded-md active:scale-98  will-change-transform ease-in-out"),
+							).
+							Children(
+								Content("+"),
+							),
+
+						Button().
+							Attributes(
+								Attribute("@click", "count > 0  ? count -= 1  : null"),
+								Attribute(":class", "count === 0 ? 'cursor-not-allowed grayscale' : 'cursor-pointer active:scale-98  will-change-transform ease-in-out '"),
+								Attribute("class", "col-span-1 p-1 w-full  text-sm text-white bg-neutral-900 rounded-md"),
+							).
+							Children(
+								Content("-"),
+							),
+
+						Button().
+							Attributes(
+								Attribute("@click", "count = 0"),
+								Attribute(":class", "count === 0 ? 'cursor-not-allowed grayscale' : 'cursor-pointer active:scale-98  will-change-transform ease-in-out '"),
+								Attribute("class", "col-span-2 p-1 w-full  text-sm text-white bg-neutral-900 rounded-md"),
+							).
+							Children(
+								Content("⟳"),
+							),
+					),
+			),
+	)
+
 func BenchmarkRender(b *testing.B) {
-	template := Html().
-		Attributes(Attribute("lang", "en")).
-		Children(
-			Empty(),
-			Head().
-				Children(
-					Meta().Attributes(Attribute("charset", "UTF-8")),
-					Meta().Attributes(
-						Attribute("name", "viewport"),
-						Attribute("content", "width=device-width, initial-scale=1.0"),
-					),
-					Meta().Attributes(
-						Attribute("name", "description"),
-						Attribute("content", "counter demo with gml"),
-					),
-					Title().Children(
-						Content("gml!!!!"),
-					),
-					Script().Attributes(
-						Attribute("src", "https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"),
-					),
-					Script().Attributes(
-						Attribute("src", "https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"),
-						Attribute("defer", ""),
-					),
-				),
-			Body().
-				Attributes(Attribute("class", "flex bg-black min-h-screen w-full items-center justify-center")).
-				Children(
-					Script().Children(
-						Content("console.log('Hello from GML !!!')"),
-					),
-					Main().
-						Attributes(
-							Attribute("x-data", "{'count': 0}"),
-							Attribute("class", "grid grid-cols-2 w-50 gap-2"),
-						).
-						Children(
-							P().
-								Attributes(
-									Attribute("x-text", "count"),
-									Attribute("class", "text-white bg-neutral-800 rounded-md p-1 col-span-2 text-center"),
-								).
-								Children(
-									Content("0"),
-								),
-
-							Button().
-								Attributes(
-									Attribute("@click", "count += 1"),
-									Attribute("class", "col-span-1 p-1 w-full cursor-pointer text-sm text-white select-none bg-neutral-900 rounded-md active:scale-98  will-change-transform ease-in-out"),
-								).
-								Children(
-									Content("+"),
-								),
-
-							Button().
-								Attributes(
-									Attribute("@click", "count > 0  ? count -= 1  : null"),
-									Attribute(":class", "count === 0 ? 'cursor-not-allowed grayscale' : 'cursor-pointer active:scale-98  will-change-transform ease-in-out '"),
-									Attribute("class", "col-span-1 p-1 w-full  text-sm text-white bg-neutral-900 rounded-md"),
-								).
-								Children(
-									Content("-"),
-								),
-
-							Button().
-								Attributes(
-									Attribute("@click", "count = 0"),
-									Attribute(":class", "count === 0 ? 'cursor-not-allowed grayscale' : 'cursor-pointer active:scale-98  will-change-transform ease-in-out '"),
-									Attribute("class", "col-span-2 p-1 w-full  text-sm text-white bg-neutral-900 rounded-md"),
-								).
-								Children(
-									Content("⟳"),
-								),
-						),
-				),
-		)
-
-	b.ResetTimer()
 	for b.Loop() {
 		template.Render(b.Context(), io.Discard)
 	}
