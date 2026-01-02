@@ -15,14 +15,17 @@ func TestMap(t *testing.T) {
 			return gml.P().Children(gml.Content(item))
 		})
 
-		html := elm.RenderHtml(t.Context())
+		html, err := elm.RenderHtml(t.Context())
+		if err != nil {
+			t.Fatal(err)
+		}
 
 		exp := ""
 		for _, item := range items {
 			exp += fmt.Sprintf("<p>%s</p>", item)
 		}
 
-		if html != exp {
+		if string(html) != exp {
 			t.Fatalf("returned html doesn't match expected: got: %v -> expected: %v", html, exp)
 		}
 	})
@@ -32,14 +35,17 @@ func TestMap(t *testing.T) {
 			return gml.P().Children(gml.Content(item))
 		})
 
-		htmlKeyed := elmKeyed.RenderHtml(t.Context())
+		htmlKeyed, err := elmKeyed.RenderHtml(t.Context())
+		if err != nil {
+			t.Fatal(err)
+		}
 
 		expKeyed := ""
 		for i, item := range items {
 			expKeyed += fmt.Sprintf("<p key=\"%d\">%s</p>", i, item)
 		}
 
-		if htmlKeyed != expKeyed {
+		if string(htmlKeyed) != expKeyed {
 			t.Fatalf("returned html doesn't match expected: got: %v -> expected: %v", htmlKeyed, expKeyed)
 		}
 	})

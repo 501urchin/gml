@@ -26,7 +26,7 @@ func TestGmlElement(t *testing.T) {
 
 	if len(elm.children) != 1 {
 		t.Errorf("children length mismatch: expected 1, got %d", len(elm.children))
-	} else if elm.children[0].RenderHtml(t.Context()) != string(childElm.html) {
+	} else if html, _ := elm.children[0].RenderHtml(t.Context()); string(html) != string(childElm.html) {
 		t.Errorf("child mismatch: expected %#v, got %#v", childElm, elm.children[0])
 	}
 
@@ -41,8 +41,11 @@ func TestGmlElement(t *testing.T) {
 	}
 
 	t.Run("render empty tag", func(t *testing.T) {
-		html := newgmlElement("", void).RenderHtml(t.Context())
-		if html != "" {
+		html, err := newgmlElement("", void).RenderHtml(t.Context())
+		if err != nil {
+			t.Fatal(err)
+		}
+		if len(html) != 0 {
 			t.Errorf("render empty tag mismatch: expected empty string, got %q", html)
 		}
 	})
@@ -61,7 +64,7 @@ func TestGmlElement(t *testing.T) {
 	})
 
 	t.Run("render raw html", func(t *testing.T) {
-		if got := elm.RenderHtml(t.Context()); got != expected {
+		if got, _ := elm.RenderHtml(t.Context()); string(got) != expected {
 			t.Errorf("renderHtml output mismatch:\nexpected:\n%s\ngot:\n%s", expected, got)
 		}
 	})
@@ -72,9 +75,17 @@ func TestGmlElement(t *testing.T) {
 			nil,
 		)
 
-		html := elm.RenderHtml(t.Context())
+		html, err := elm.RenderHtml(t.Context())
+		if err != nil {
+			t.Fatal(err)
+		}
 
-		if html != "<div>"+childElm.RenderHtml(t.Context())+"</div>" {
+		chtml, err := childElm.RenderHtml(t.Context())
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		if string(html) != "<div>"+string(chtml)+"</div>" {
 			t.Error("function rendered a nil value")
 		}
 	})

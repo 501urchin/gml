@@ -31,18 +31,18 @@ func (m *mapComponent[S]) Children(_ ...gml.GmlElement) gml.GmlElement {
 	return m
 }
 
-func (m *mapComponent[S]) RenderHtml(ctx context.Context) string {
+func (m *mapComponent[S]) RenderHtml(ctx context.Context) (html []byte, err error) {
 	if m == nil {
-		return ""
+		return
 	}
 
 	var buf bytes.Buffer
-	err := m.Render(ctx, &buf)
+	err = m.Render(ctx, &buf)
 	if err != nil {
-		return ""
+		return
 	}
 
-	return buf.String()
+	return buf.Bytes(), nil
 }
 
 func (m *mapComponent[S]) Render(ctx context.Context, w io.Writer) error {

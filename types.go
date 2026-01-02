@@ -8,7 +8,7 @@ import (
 type GmlElement interface {
 	Attributes(attributes ...Attr) GmlElement
 	Children(children ...GmlElement) GmlElement
-	RenderHtml(ctx context.Context) string
+	RenderHtml(ctx context.Context) ([]byte, error)
 	Render(ctx context.Context, w io.Writer) error
 	RenderBestEffort(ctx context.Context, w io.Writer) error
 }

@@ -14,9 +14,22 @@ func TestGroup(t *testing.T) {
 		elm2,
 	)
 
-	html := elm.RenderHtml(t.Context())
+	html, err := elm.RenderHtml(t.Context())
+	if err != nil {
+		t.Fatal(err)
+	}
 
-	if exp := elm1.RenderHtml(t.Context()) + elm2.RenderHtml(t.Context()); html != exp {
+	h1, err := elm1.RenderHtml(t.Context())
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	h2, err := elm2.RenderHtml(t.Context())
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if exp := string(h1) + string(h2); string(html) != exp {
 		t.Errorf("failled to render group: got %q but expected %q", html, exp)
 	}
 }

@@ -40,18 +40,18 @@ func (elm *gmlElement) Children(children ...GmlElement) GmlElement {
 	return elm
 }
 
-func (d *gmlElement) RenderHtml(ctx context.Context) string {
+func (d *gmlElement) RenderHtml(ctx context.Context) (html []byte, err error) {
 	if d == nil || d.tag == "" {
-		return ""
+		return
 	}
 
 	var builder bytes.Buffer
-	err := d.Render(ctx, &builder)
+	err = d.Render(ctx, &builder)
 	if err != nil {
-		return ""
+		return
 	}
 
-	return builder.String()
+	return builder.Bytes(), nil
 }
 
 var leftBracket = []byte("<")
@@ -127,7 +127,7 @@ func (d *gmlElement) renderInternal(ctx context.Context, w io.Writer, bestEffort
 	if _, err := w.Write([]byte(d.tag)); err != nil {
 		return err
 	}
-	
+
 	if _, err := w.Write(rightBracket); err != nil {
 		return err
 	}

@@ -26,20 +26,20 @@ func (t *group) Children(_ ...gml.GmlElement) gml.GmlElement {
 	return t
 }
 
-func (t *group) RenderHtml(ctx context.Context) string {
+func (t *group) RenderHtml(ctx context.Context) (html []byte, err error) {
 	if t == nil {
-		return ""
+		return
 	}
 
 	var buf bytes.Buffer
 	for _, elm := range t.gmlElements {
 		err := elm.Render(ctx, &buf)
 		if err != nil {
-			return ""
+			return nil, err
 		}
 	}
 
-	return buf.String()
+	return buf.Bytes(), nil
 }
 
 func (t *group) Render(ctx context.Context, w io.Writer) error {

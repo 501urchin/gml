@@ -16,6 +16,11 @@ func Content(t string) content {
 	return content{html: []byte(t)}
 }
 
+// function is used to render raw html
+func Raw(t string) content {
+	return content{html: []byte(t)}
+}
+
 func (t content) Attributes(_ ...Attr) GmlElement {
 	return t
 }
@@ -23,8 +28,8 @@ func (t content) Children(_ ...GmlElement) GmlElement {
 	return t
 }
 
-func (t content) RenderHtml(ctx context.Context) string {
-	return string(t.html)
+func (t content) RenderHtml(ctx context.Context) (html []byte, err error) {
+	return t.html, nil
 }
 
 func (t content) Render(_ context.Context, w io.Writer) error {
@@ -50,8 +55,10 @@ func (e empty) Children(children ...GmlElement) GmlElement {
 	return e
 }
 
-func (empty) RenderHtml(ctx context.Context) string {
-	return ""
+var emptySlice = []byte{}
+
+func (empty) RenderHtml(ctx context.Context) (html []byte, err error) {
+	return emptySlice, nil
 }
 func (empty) Render(ctx context.Context, w io.Writer) error {
 	return nil
