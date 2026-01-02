@@ -13,3 +13,15 @@ func If(cond bool, fn func() gml.GmlElement) gml.GmlElement {
 
 	return fn()
 }
+
+func IfAttr(cond bool, fn func() gml.AttributeIface) gml.AttributeIface {
+	if !cond {
+		return gml.Attr{}
+	}
+
+	if fn == nil {
+		return gml.Attr{}
+	}
+
+	return fn()
+}

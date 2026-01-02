@@ -9,10 +9,18 @@ type Attr struct {
 	Value []byte
 }
 
+type AttributeIface interface {
+	Render(w io.Writer) (err error)
+}
+
 var attrBegin = []byte(`="`)
 var attrEnd = []byte(`"`)
 
 func (a Attr) Render(w io.Writer) (err error) {
+	if len(a.Key) == 0 {
+		return
+	}
+	
 	_, err = w.Write(a.Key)
 	if err != nil {
 		return
