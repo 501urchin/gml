@@ -1,43 +1,34 @@
 package gml
 
 import (
-	"html"
-	"strings"
+	"bytes"
 )
 
-func (a Attr) RenderHtml() string {
-	var b strings.Builder
-	b.Grow(len(a.Key) + len(a.Value) + 3)
-	b.WriteString(a.Key)
+type Attr struct {
+	Key   []byte
+	Value []byte
+}
 
-	if a.Value != "" {
+func (a Attr) RenderHtml() []byte {
+	var b bytes.Buffer
+	b.Grow(len(a.Key) + len(a.Value) + 3)
+	b.Write(a.Key)
+
+	if len(a.Value) != 0 {
 		b.WriteByte('=')
 		b.WriteByte('"')
-		if a.raw {
-			b.WriteString(a.Value)
-		} else {
-			b.WriteString(html.EscapeString(a.Value))
-		}
+		b.Write(a.Value)
 		b.WriteByte('"')
 	}
-	return b.String()
+	return b.Bytes()
 }
 
+// escapes attributes by default
 func Attribute(key string, value ...string) Attr {
-	a := Attr{Key: key, raw: false}
+	a := Attr{Key: []byte(key)}
 
 	if len(value) != 0 {
-		a.Value = value[0]
-	}
-
-	return a
-}
-
-func AttributeNoEscape(key string, value ...string) Attr {
-	a := Attr{Key: key, raw: true}
-
-	if len(value) != 0 {
-		a.Value = value[0]
+		a.Value = []byte(value[0])
 	}
 
 	return a

@@ -78,7 +78,7 @@ func (d *gmlElement) renderInternal(ctx context.Context, w io.Writer, bestEffort
 				return err
 			}
 
-			if _, err := w.Write([]byte(attr.RenderHtml())); err != nil {
+			if _, err := w.Write(attr.RenderHtml()); err != nil {
 				return err
 			}
 		}

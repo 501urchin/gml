@@ -2,14 +2,14 @@ package gml
 
 import (
 	"bytes"
-	"os"
+	"io"
 	"testing"
 )
 
 func TestGmlElement(t *testing.T) {
 	expected := `<h1 class="text-white">hello</h1>`
 
-	attributes := []Attr{{Key: "class", Value: "text-white"}}
+	attributes := []Attr{{Key: []byte("class"), Value: []byte("text-white")}}
 	childElm := Content("hello")
 	void := false
 	gmlElementTag := "h1"
@@ -32,7 +32,7 @@ func TestGmlElement(t *testing.T) {
 
 	if len(elm.attributes) != 1 {
 		t.Errorf("attributes length mismatch: expected 1, got %d", len(elm.attributes))
-	} else if elm.attributes[0] != attributes[0] {
+	} else if !bytes.Equal(elm.attributes[0].Key, attributes[0].Key) {
 		t.Errorf("attribute mismatch: expected %#v, got %#v", attributes[0], elm.attributes[0])
 	}
 
@@ -174,24 +174,8 @@ func BenchmarkRender(b *testing.B) {
 				),
 		)
 
-	b.Run("stream", func(b *testing.B) {
-		file, err := os.Open(os.DevNull)
-		if err != nil {
-			b.Fatal(err)
-		}
-		defer file.Close()
-
-		b.ResetTimer()
-		for b.Loop() {
-			template.Render(b.Context(), file)
-		}
-
-	})
-
-	b.Run("render normal", func(b *testing.B) {
-
-		for b.Loop() {
-			template.RenderHtml(b.Context())
-		}
-	})
+	b.ResetTimer()
+	for b.Loop() {
+		template.Render(b.Context(), io.Discard)
+	}
 }

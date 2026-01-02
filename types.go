@@ -22,8 +22,3 @@ type gmlElement struct {
 	children      []GmlElement
 }
 
-type Attr struct {
-	Key   string
-	Value string
-	raw   bool
-}
