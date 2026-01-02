@@ -7,6 +7,20 @@ import (
 	"slices"
 )
 
+type gmlElement struct {
+	void          bool
+	tag           string
+	attributes    []Attr
+	attrKeysLen   int
+	attrValuesLen int
+	children      []GmlElement
+}
+
+var leftBracket = []byte("<")
+var rightBracket = []byte(">")
+var closingTag = []byte("</")
+var space = []byte(" ")
+
 func newgmlElement(tag string, void bool) *gmlElement {
 	elm := gmlElement{}
 	elm.tag = tag
@@ -53,11 +67,6 @@ func (d *gmlElement) RenderHtml(ctx context.Context) (html []byte, err error) {
 
 	return builder.Bytes(), nil
 }
-
-var leftBracket = []byte("<")
-var rightBracket = []byte(">")
-var closingTag = []byte("</")
-var space = []byte(" ")
 
 func (d *gmlElement) renderInternal(ctx context.Context, w io.Writer, bestEffort bool) error {
 	if d == nil || d.tag == "" {

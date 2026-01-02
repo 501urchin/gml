@@ -33,11 +33,3 @@ type GmlElement interface {
 	RenderHtml(ctx context.Context) ([]byte, error)
 }
 
-type gmlElement struct {
-	void          bool
-	tag           string
-	attributes    []Attr
-	attrKeysLen   int
-	attrValuesLen int
-	children      []GmlElement
-}
