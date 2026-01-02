@@ -7,13 +7,13 @@ import (
 
 // text content
 type content struct {
-	htmlString string
+	html []byte
 }
 
 // Content creates a content struct representing the inner content of an HTML gmlElement.
 // It can also be used to render raw HTML strings directly.
 func Content(t string) content {
-	return content{htmlString: t}
+	return content{html: []byte(t)}
 }
 
 func (t content) Attributes(_ ...Attr) GmlElement {
@@ -24,16 +24,16 @@ func (t content) Children(_ ...GmlElement) GmlElement {
 }
 
 func (t content) RenderHtml(ctx context.Context) string {
-	return t.htmlString
+	return string(t.html)
 }
 
 func (t content) Render(_ context.Context, w io.Writer) error {
-	_, err := w.Write([]byte(t.htmlString))
+	_, err := w.Write(t.html)
 	return err
 }
 
 func (t content) RenderBestEffort(_ context.Context, w io.Writer) error {
-	_, err := w.Write([]byte(t.htmlString))
+	_, err := w.Write(t.html)
 	return err
 }
 

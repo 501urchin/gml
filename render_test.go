@@ -26,7 +26,7 @@ func TestGmlElement(t *testing.T) {
 
 	if len(elm.children) != 1 {
 		t.Errorf("children length mismatch: expected 1, got %d", len(elm.children))
-	} else if elm.children[0] != childElm {
+	} else if elm.children[0].RenderHtml(t.Context()) != string(childElm.html) {
 		t.Errorf("child mismatch: expected %#v, got %#v", childElm, elm.children[0])
 	}
 
