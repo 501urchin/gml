@@ -10,7 +10,6 @@
 
 		gml.P().
 			Children(
-				gmlx.If(45),
 				gml.Content("hello from"),
 			),
 
