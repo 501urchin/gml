@@ -25,13 +25,26 @@ func TestConditional(t *testing.T) {
 			t.Error("faield to retun correct element")
 		}
 	})
-	t.Run("false", func(t *testing.T) {
-		condElm := If(false, func() gml.GmlElement { return elm })
+
+	t.Run("else", func(t *testing.T) {
+		ifElm := gml.Content("if")
+		elseElm := gml.Content("else")
+
+		condElm := If(false,
+			func() gml.GmlElement { return ifElm },
+		).Else(
+			func() gml.GmlElement { return elseElm },
+		)
+
 		h1, err := condElm.RenderHtml(t.Context())
 		if err != nil {
 			t.Fatal(err)
 		}
-		if len(h1) != 0 {
+		h2, err := elseElm.RenderHtml(t.Context())
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !bytes.Equal(h1, h2) {
 			t.Error("faield to retun correct element")
 		}
 	})

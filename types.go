@@ -32,4 +32,3 @@ type GmlElement interface {
 	// streaming to an io.Writer.
 	RenderHtml(ctx context.Context) ([]byte, error)
 }
-

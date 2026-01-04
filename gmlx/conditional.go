@@ -1,27 +1,60 @@
 package gmlx
 
-import "github.com/501urchin/gml"
+import (
+	"context"
+	"io"
 
-func If(cond bool, fn func() gml.GmlElement) gml.GmlElement {
-	if !cond {
-		return gml.Empty()
-	}
+	"github.com/501urchin/gml"
+)
 
-	if fn == nil {
-		return gml.Empty()
-	}
-
-	return fn()
+type ifInternal struct {
+	cond     bool
+	ifFunc   func() gml.GmlElement
+	elseFunc func() gml.GmlElement
 }
 
-func IfAttr(cond bool, fn func() gml.AttributeIface) gml.AttributeIface {
-	if !cond {
-		return gml.Attr{}
+func If(cond bool, fn func() gml.GmlElement) *ifInternal {
+	return &ifInternal{cond: cond, ifFunc: fn}
+}
+
+func (i *ifInternal) Else(fn func() gml.GmlElement) *ifInternal {
+	i.elseFunc = fn
+	return i
+}
+
+func (i *ifInternal) Attributes(attributes ...gml.Attr) gml.GmlElement     { return i }
+func (i *ifInternal) Children(attributes ...gml.GmlElement) gml.GmlElement { return i }
+func (i *ifInternal) RenderBestEffort(ctx context.Context, w io.Writer) error {
+	return i.Render(ctx, w)
+}
+
+func (i *ifInternal) Render(ctx context.Context, w io.Writer) error {
+	if i.ifFunc == nil {
+		return gml.Empty().Render(ctx, w)
 	}
 
-	if fn == nil {
-		return gml.Attr{}
+	if i.cond {
+		return i.ifFunc().Render(ctx, w)
 	}
 
-	return fn()
+	if i.elseFunc != nil && !i.cond {
+		return i.elseFunc().Render(ctx, w)
+	}
+
+	return nil
+}
+func (i *ifInternal) RenderHtml(ctx context.Context) ([]byte, error) {
+	if i.ifFunc == nil {
+		return gml.Empty().RenderHtml(ctx)
+	}
+
+	if i.cond {
+		return i.ifFunc().RenderHtml(ctx)
+	}
+
+	if i.elseFunc != nil && !i.cond {
+		return i.elseFunc().RenderHtml(ctx)
+	}
+
+	return nil, nil
 }
