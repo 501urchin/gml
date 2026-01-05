@@ -2,7 +2,6 @@ package gml
 
 import (
 	"bytes"
-	"io"
 	"testing"
 )
 
@@ -184,8 +183,10 @@ var template = Html().
 			),
 	)
 
+// bofore gopt: enchmarkRender-10        851790              1400 ns/op            4296 B/op         34 allocs/op
+// after gopt: BenchmarkRender-10       1077978              1108 ns/op            4080 B/op          7 allocs/op
 func BenchmarkRender(b *testing.B) {
 	for b.Loop() {
-		template.Render(b.Context(), io.Discard)
+		template.RenderHtml(b.Context())
 	}
 }

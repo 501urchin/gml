@@ -5,6 +5,8 @@ import (
 	"context"
 	"io"
 	"slices"
+
+	"github.com/501urchin/gopt"
 )
 
 type gmlElement struct {
@@ -78,7 +80,7 @@ func (d *gmlElement) renderInternal(ctx context.Context, w io.Writer, bestEffort
 		return err
 	}
 
-	if _, err := w.Write([]byte(d.tag)); err != nil {
+	if _, err := w.Write(gopt.StringToBytes(d.tag)); err != nil {
 		return err
 	}
 
@@ -133,7 +135,7 @@ func (d *gmlElement) renderInternal(ctx context.Context, w io.Writer, bestEffort
 		return err
 	}
 
-	if _, err := w.Write([]byte(d.tag)); err != nil {
+	if _, err := w.Write(gopt.StringToBytes(d.tag)); err != nil {
 		return err
 	}
 

@@ -36,3 +36,9 @@ func TestContent(t *testing.T) {
 		}
 	}
 }
+
+func BenchmarkContent(b *testing.B) {
+	for b.Loop() {
+		Content("hello").RenderHtml(b.Context())
+	}
+}

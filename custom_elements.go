@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"io"
 	"strconv"
+
+	"github.com/501urchin/gopt"
 )
 
 // text content
@@ -22,9 +24,9 @@ func Content(t any) content {
 
 	switch v := t.(type) {
 	case string:
-		parsed = []byte(v)
+		parsed = gopt.StringToBytes(v)
 	case fmt.Stringer:
-		parsed = []byte(v.String())
+		parsed = gopt.StringToBytes(v.String())
 	case nil:
 		parsed = null
 	case []byte:
@@ -64,7 +66,7 @@ func Content(t any) content {
 
 // function is used to render raw html
 func Raw(t string) content {
-	return content{html: []byte(t)}
+	return content{html: gopt.StringToBytes(t)}
 }
 
 func (t content) Attributes(_ ...Attr) GmlElement {

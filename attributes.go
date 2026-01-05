@@ -2,6 +2,8 @@ package gml
 
 import (
 	"io"
+
+	"github.com/501urchin/gopt"
 )
 
 type Attr struct {
@@ -48,10 +50,10 @@ func (a Attr) Render(w io.Writer) (err error) {
 
 // escapes attributes by default
 func Attribute(key string, value ...string) Attr {
-	a := Attr{Key: []byte(key)}
+	a := Attr{Key: gopt.StringToBytes(key)}
 
 	if len(value) != 0 {
-		a.Value = []byte(value[0])
+		a.Value = gopt.StringToBytes(value[0])
 	}
 
 	return a
