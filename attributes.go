@@ -3,7 +3,7 @@ package gml
 import (
 	"io"
 
-	"github.com/501urchin/gopt"
+	"github.com/501urchin/gml/internal"
 )
 
 type Attr struct {
@@ -28,7 +28,7 @@ func (a Attr) Render(w io.Writer) (err error) {
 		return
 	}
 
-	if len(a.Value) != 0 {
+	if a.Value != nil {
 		_, err = w.Write(attrBegin)
 		if err != nil {
 			return
@@ -50,10 +50,10 @@ func (a Attr) Render(w io.Writer) (err error) {
 
 // escapes attributes by default
 func Attribute(key string, value ...string) Attr {
-	a := Attr{Key: gopt.StringToBytes(key)}
+	a := Attr{Key: internal.StringToBytes(key)}
 
 	if len(value) != 0 {
-		a.Value = gopt.StringToBytes(value[0])
+		a.Value = internal.StringToBytes(value[0])
 	}
 
 	return a

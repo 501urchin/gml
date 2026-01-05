@@ -6,7 +6,7 @@ import (
 	"io"
 	"slices"
 
-	"github.com/501urchin/gopt"
+	"github.com/501urchin/gml/internal"
 )
 
 type gmlElement struct {
@@ -43,6 +43,7 @@ func (elm *gmlElement) Attributes(attributes ...Attr) GmlElement {
 
 	return elm
 }
+
 func (elm *gmlElement) Children(children ...GmlElement) GmlElement {
 	if elm.void {
 		return elm
@@ -56,20 +57,6 @@ func (elm *gmlElement) Children(children ...GmlElement) GmlElement {
 	return elm
 }
 
-func (d *gmlElement) RenderHtml(ctx context.Context) (html []byte, err error) {
-	if d == nil || d.tag == "" {
-		return
-	}
-
-	var builder bytes.Buffer
-	err = d.Render(ctx, &builder)
-	if err != nil {
-		return
-	}
-
-	return builder.Bytes(), nil
-}
-
 func (d *gmlElement) renderInternal(ctx context.Context, w io.Writer, bestEffort bool) error {
 	if d == nil || d.tag == "" {
 		return nil
@@ -80,7 +67,7 @@ func (d *gmlElement) renderInternal(ctx context.Context, w io.Writer, bestEffort
 		return err
 	}
 
-	if _, err := w.Write(gopt.StringToBytes(d.tag)); err != nil {
+	if _, err := w.Write(internal.StringToBytes(d.tag)); err != nil {
 		return err
 	}
 
@@ -135,7 +122,7 @@ func (d *gmlElement) renderInternal(ctx context.Context, w io.Writer, bestEffort
 		return err
 	}
 
-	if _, err := w.Write(gopt.StringToBytes(d.tag)); err != nil {
+	if _, err := w.Write(internal.StringToBytes(d.tag)); err != nil {
 		return err
 	}
 
@@ -144,6 +131,20 @@ func (d *gmlElement) renderInternal(ctx context.Context, w io.Writer, bestEffort
 	}
 
 	return nil
+}
+
+func (d *gmlElement) RenderHtml(ctx context.Context) (html []byte, err error) {
+	if d == nil || d.tag == "" {
+		return
+	}
+
+	var builder bytes.Buffer
+	err = d.Render(ctx, &builder)
+	if err != nil {
+		return
+	}
+
+	return builder.Bytes(), nil
 }
 
 func (d *gmlElement) Render(ctx context.Context, w io.Writer) error {

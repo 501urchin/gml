@@ -6,14 +6,10 @@ import (
 )
 
 type GmlElement interface {
-	// Attributes returns a new element with the provided attributes applied.
-	// Implementations may either mutate the receiver or return a modified copy,
-	// but callers should assume the original element is not safe to reuse unless
-	// documented otherwise.
+	// Attributes returns the receiver with the provided attributes appended.
 	Attributes(attributes ...Attr) GmlElement
 
-	// Children returns a new element with the provided child elements appended
-	// in the given order.
+	// Children returns the receiver with the provided child elements appended.
 	Children(children ...GmlElement) GmlElement
 
 	// Render writes the rendered HTML representation of the element to w.
