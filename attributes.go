@@ -11,9 +11,17 @@ type Attr struct {
 	Value []byte
 }
 
-type AttributeIface interface {
-	Render(w io.Writer) (err error)
+
+func Attribute(key string, value ...string) Attr {
+	a := Attr{Key: internal.StringToBytes(key)}
+
+	if len(value) != 0 {
+		a.Value = internal.StringToBytes(value[0])
+	}
+
+	return a
 }
+
 
 var attrBegin = []byte(`="`)
 var attrEnd = []byte(`"`)
@@ -46,15 +54,4 @@ func (a Attr) Render(w io.Writer) (err error) {
 	}
 
 	return nil
-}
-
-// escapes attributes by default
-func Attribute(key string, value ...string) Attr {
-	a := Attr{Key: internal.StringToBytes(key)}
-
-	if len(value) != 0 {
-		a.Value = internal.StringToBytes(value[0])
-	}
-
-	return a
 }
