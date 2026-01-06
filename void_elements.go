@@ -69,3 +69,7 @@ func Source() *gmlElement {
 func Track() *gmlElement {
 	return newgmlElement("track", true)
 }
+
+func DocTypeHtml() *gmlElement {
+	return newgmlElement("!DOCTYPE html", true)
+}
