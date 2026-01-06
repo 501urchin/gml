@@ -86,7 +86,7 @@ type GmlElement interface {
 
 * Each HTML construct is represented as a Go value implementing `GmlElement`.
 * Elements are composed by calling `Attributes(...)` and `Children(...)`.
-* Rendering is explicit and opt-in via one of the `Render*` methods.
+* Rendering is explicit and opt-in via one of the `Render` methods.
 
 ### Rendering Strategy
 
