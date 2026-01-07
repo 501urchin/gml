@@ -7,21 +7,19 @@ import (
 )
 
 type Attr struct {
-	Key   []byte
-	Value []byte
+	Key   string
+	Value string
 }
 
-
 func Attribute(key string, value ...string) Attr {
-	a := Attr{Key: internal.StringToBytes(key)}
+	a := Attr{Key: key}
 
 	if len(value) != 0 {
-		a.Value = internal.StringToBytes(value[0])
+		a.Value = value[0]
 	}
 
 	return a
 }
-
 
 var attrBegin = []byte(`="`)
 var attrEnd = []byte(`"`)
@@ -31,18 +29,18 @@ func (a Attr) Render(w io.Writer) (err error) {
 		return
 	}
 
-	_, err = w.Write(a.Key)
+	_, err = w.Write(internal.StringToBytes(a.Key))
 	if err != nil {
 		return
 	}
 
-	if a.Value != nil {
+	if a.Value != "" {
 		_, err = w.Write(attrBegin)
 		if err != nil {
 			return
 		}
 
-		_, err = w.Write(a.Value)
+		_, err = w.Write(internal.StringToBytes(a.Value))
 		if err != nil {
 			return
 		}

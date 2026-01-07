@@ -1,100 +1,97 @@
 package gml
 
-import "github.com/501urchin/gml/internal"
-
-
-var classKey = []byte("class")
+var classKey = "class"
 
 func Class(value string) Attr {
-	return Attr{Key: classKey, Value: internal.StringToBytes(value)}
+	return Attr{Key: classKey, Value: value}
 }
 
-var idKey = []byte("id")
+var idKey = "id"
 
 func Id(value string) Attr {
-	return Attr{Key: idKey, Value: internal.StringToBytes(value)}
+	return Attr{Key: idKey, Value: value}
 }
 
-var srcKey = []byte("src")
+var srcKey = "src"
 
 func Src(value string) Attr {
-	return Attr{Key: srcKey, Value: internal.StringToBytes(value)}
+	return Attr{Key: srcKey, Value: value}
 }
 
-var hrefKey = []byte("href")
+var hrefKey = "href"
 
 func Href(value string) Attr {
-	return Attr{Key: hrefKey, Value: internal.StringToBytes(value)}
+	return Attr{Key: hrefKey, Value: value}
 }
 
-var altKey = []byte("alt")
+var altKey = "alt"
 
 func Alt(value string) Attr {
-	return Attr{Key: altKey, Value: internal.StringToBytes(value)}
+	return Attr{Key: altKey, Value: value}
 }
 
-var typeKey = []byte("type")
+var typeKey = "type"
 
 func Type(value string) Attr {
-	return Attr{Key: typeKey, Value: internal.StringToBytes(value)}
+	return Attr{Key: typeKey, Value: value}
 }
 
-var valueKey = []byte("value")
+var valueKey = "value"
 
 func Value(value string) Attr {
-	return Attr{Key: valueKey, Value: internal.StringToBytes(value)}
+	return Attr{Key: valueKey, Value: value}
 }
 
-var nameKey = []byte("name")
+var nameKey = "name"
 
 func Name(value string) Attr {
-	return Attr{Key: nameKey, Value: internal.StringToBytes(value)}
+	return Attr{Key: nameKey, Value: value}
 }
 
-var placeholderKey = []byte("placeholder")
+var placeholderKey = "placeholder"
 
 func Placeholder(value string) Attr {
-	return Attr{Key: placeholderKey, Value: internal.StringToBytes(value)}
+	return Attr{Key: placeholderKey, Value: value}
 }
 
-var disabledKey = []byte("disabled")
+var disabledKey = "disabled"
 
 func Disabled() Attr {
-	return Attr{Key: disabledKey, Value: nil}
+	return Attr{Key: disabledKey, Value: ""}
 }
 
-var checkedKey = []byte("checked")
+var checkedKey = "checked"
 
 func Checked() Attr {
-	return Attr{Key: checkedKey, Value: nil}
+	return Attr{Key: checkedKey, Value: ""}
 }
 
-var forKey = []byte("for")
+var forKey = "for"
 
 func For(value string) Attr {
-	return Attr{Key: forKey, Value: internal.StringToBytes(value)}
+	return Attr{Key: forKey, Value: value}
 }
 
-var targetKey = []byte("target")
+var targetKey = "target"
 
 func Target(value string) Attr {
-	return Attr{Key: targetKey, Value: internal.StringToBytes(value)}
+	return Attr{Key: targetKey, Value: value}
 }
 
-var relKey = []byte("rel")
+var relKey = "rel"
 
 func Rel(value string) Attr {
-	return Attr{Key: relKey, Value: internal.StringToBytes(value)}
+	return Attr{Key: relKey, Value: value}
 }
 
-var widthKey = []byte("width")
+var widthKey = "width"
 
 func Width(value string) Attr {
-	return Attr{Key: widthKey, Value: internal.StringToBytes(value)}
+	return Attr{Key: widthKey, Value: value}
 }
 
-var heightKey = []byte("height")
+var heightKey = "height"
 
 func Height(value string) Attr {
-	return Attr{Key: heightKey, Value: internal.StringToBytes(value)}
+	return Attr{Key: heightKey, Value: value}
 }
