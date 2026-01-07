@@ -30,7 +30,7 @@ func TestConditional(t *testing.T) {
 		ifElm := gml.Content("if")
 		elseElm := gml.Content("else")
 
-		condElm := If(false,
+		condElm := IfElse(false,
 			func() gml.GmlElement { return ifElm },
 		).Else(
 			func() gml.GmlElement { return elseElm },

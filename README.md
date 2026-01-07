@@ -238,8 +238,6 @@ Key features include:
 ```go
 gmlx.If(LoggedIn, func() gml.GmlElement {
 	return gml.Content("LoggedIn")
-}).Else(func() gml.GmlElement {
-	return gml.Content("not logged in")
 })
 ```
 

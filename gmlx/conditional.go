@@ -8,12 +8,20 @@ import (
 )
 
 type ifInternal struct {
-	cond     bool
 	ifFunc   func() gml.GmlElement
 	elseFunc func() gml.GmlElement
+	cond     bool
 }
 
-func If(cond bool, fn func() gml.GmlElement) *ifInternal {
+func If(cond bool, fn func() gml.GmlElement) gml.GmlElement {
+	if cond {
+		return fn()
+	}
+
+	return gml.Empty()
+}
+
+func IfElse(cond bool, fn func() gml.GmlElement) *ifInternal {
 	return &ifInternal{cond: cond, ifFunc: fn}
 }
 
