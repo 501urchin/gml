@@ -5,17 +5,15 @@ import (
 	"context"
 	"io"
 	"slices"
-
-	"github.com/501urchin/gml/internal"
 )
 
 type gmlElement struct {
-	void          bool
-	tag           string
-	attributes    []Attr
-	attrKeysLen   int
-	attrValuesLen int
-	children      []GmlElement
+	attributes    []Attr       // 24 bytes
+	children      []GmlElement // 24 bytes
+	attrKeysLen   uint32       // 4 bytes
+	attrValuesLen uint32       // 4 bytes
+	tag           uint8        // 1 byte
+	void          bool         // 1 byte
 }
 
 var leftBracket = []byte("<")
@@ -23,7 +21,7 @@ var rightBracket = []byte(">")
 var closingTag = []byte("</")
 var space = []byte(" ")
 
-func newgmlElement(tag string, void bool) *gmlElement {
+func newgmlElement(tag uint8, void bool) *gmlElement {
 	elm := gmlElement{}
 	elm.tag = tag
 	elm.void = void
@@ -36,8 +34,8 @@ func (elm *gmlElement) Attributes(attributes ...Attr) GmlElement {
 
 		for _, attr := range attributes {
 			elm.attributes = append(elm.attributes, attr)
-			elm.attrKeysLen += len(attr.Key)
-			elm.attrValuesLen += len(attr.Value) + 3
+			elm.attrKeysLen += uint32(len(attr.Key))
+			elm.attrValuesLen += uint32(len(attr.Value)) + 3
 		}
 	}
 
@@ -58,7 +56,7 @@ func (elm *gmlElement) Children(children ...GmlElement) GmlElement {
 }
 
 func (d *gmlElement) renderInternal(ctx context.Context, w io.Writer, bestEffort bool) error {
-	if d == nil || d.tag == "" {
+	if d == nil {
 		return nil
 	}
 
@@ -67,7 +65,9 @@ func (d *gmlElement) renderInternal(ctx context.Context, w io.Writer, bestEffort
 		return err
 	}
 
-	if _, err := w.Write(internal.StringToBytes(d.tag)); err != nil {
+	tag := elementNames[d.tag]
+
+	if _, err := w.Write(tag); err != nil {
 		return err
 	}
 
@@ -122,7 +122,7 @@ func (d *gmlElement) renderInternal(ctx context.Context, w io.Writer, bestEffort
 		return err
 	}
 
-	if _, err := w.Write(internal.StringToBytes(d.tag)); err != nil {
+	if _, err := w.Write(tag); err != nil {
 		return err
 	}
 
@@ -134,7 +134,7 @@ func (d *gmlElement) renderInternal(ctx context.Context, w io.Writer, bestEffort
 }
 
 func (d *gmlElement) RenderHtml(ctx context.Context) (html []byte, err error) {
-	if d == nil || d.tag == "" {
+	if d == nil {
 		return
 	}
 
@@ -148,7 +148,7 @@ func (d *gmlElement) RenderHtml(ctx context.Context) (html []byte, err error) {
 }
 
 func (d *gmlElement) Render(ctx context.Context, w io.Writer) error {
-	if d == nil || d.tag == "" {
+	if d == nil {
 		return nil
 	}
 
@@ -156,7 +156,7 @@ func (d *gmlElement) Render(ctx context.Context, w io.Writer) error {
 }
 
 func (d *gmlElement) RenderBestEffort(ctx context.Context, w io.Writer) error {
-	if d == nil || d.tag == "" {
+	if d == nil {
 		return nil
 	}
 
