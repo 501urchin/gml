@@ -18,11 +18,11 @@ var rightBracket = []byte(">")
 var closingTag = []byte("</")
 var space = []byte(" ")
 
-func newgmlElement(tag uint8, void bool) *gmlElement {
-	elm := gmlElement{}
-	elm.tag = tag
-	elm.void = void
-	return &elm
+func newGmlElement(tag uint8, void bool) *gmlElement {
+	return &gmlElement{
+		tag:  tag,
+		void: void,
+	}
 }
 
 func (elm *gmlElement) Attributes(attributes ...Attr) GmlElement {

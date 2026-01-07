@@ -12,10 +12,10 @@ import (
 // 	void := false
 // 	gmlElementTag := elH1
 
-// 	v := newgmlElement(gmlElementTag, void).Attributes(attributes...).Children(childElm)
+// 	v := newGmlElement(gmlElementTag, void).Attributes(attributes...).Children(childElm)
 // 	elm, ok := v.(*gmlElement)
 // 	if !ok {
-// 		t.Fatal("failed to cast newgmlElement as *gmlElement")
+// 		t.Fatal("failed to cast newGmlElement as *gmlElement")
 // 	}
 
 // 	if elm.tag != gmlElementTag {
@@ -39,7 +39,7 @@ import (
 // 	}
 
 // 	// t.Run("render empty tag", func(t *testing.T) {
-// 	// 	html, err := newgmlElement(0, void).RenderHtml(t.Context())
+// 	// 	html, err := newGmlElement(0, void).RenderHtml(t.Context())
 // 	// 	if err != nil {
 // 	// 		t.Fatal(err)
 // 	// 	}
@@ -192,6 +192,6 @@ func BenchmarkRender(b *testing.B) {
 
 func BenchmarkNewElement(b *testing.B) {
 	for b.Loop() {
-		newgmlElement(elDiv, false)
+		newGmlElement(elDiv, false)
 	}
 }
