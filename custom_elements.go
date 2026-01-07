@@ -12,61 +12,63 @@ import (
 
 // text content
 type content struct {
-	html []byte
+	html string
 }
 
-var null = []byte{}
+var null = ""
 
 // Content creates a content struct representing the inner content of an HTML gmlElement.
 // It can also be used to render raw HTML strings directly.
 func Content(t any) content {
-	var parsed []byte
+	var parsed string
 
 	switch v := t.(type) {
 	case string:
-		parsed = internal.StringToBytes(v)
+		parsed = v
 	case fmt.Stringer:
-		parsed = internal.StringToBytes(v.String())
+		parsed = v.String()
 	case nil:
 		parsed = null
 	case []byte:
-		parsed = v
+		parsed = internal.BytesToString(v)
 	case bool:
-		parsed = strconv.AppendBool(parsed, v)
+		parsed = strconv.FormatBool(v)
 	case int:
-		parsed = strconv.AppendInt(parsed, int64(v), 10)
+		parsed = strconv.FormatInt(int64(v), 10)
 	case int8:
-		parsed = strconv.AppendInt(parsed, int64(v), 10)
+		parsed = strconv.FormatInt(int64(v), 10)
 	case int16:
-		parsed = strconv.AppendInt(parsed, int64(v), 10)
+		parsed = strconv.FormatInt(int64(v), 10)
 	case int32:
-		parsed = strconv.AppendInt(parsed, int64(v), 10)
+		parsed = strconv.FormatInt(int64(v), 10)
 	case int64:
-		parsed = strconv.AppendInt(parsed, v, 10)
+		parsed = strconv.FormatInt(v, 10)
 	case uint:
-		parsed = strconv.AppendUint(parsed, uint64(v), 10)
+		parsed = strconv.FormatUint(uint64(v), 10)
 	case uint8:
-		parsed = strconv.AppendUint(parsed, uint64(v), 10)
+		parsed = strconv.FormatUint(uint64(v), 10)
 	case uint16:
-		parsed = strconv.AppendUint(parsed, uint64(v), 10)
+		parsed = strconv.FormatUint(uint64(v), 10)
 	case uint32:
-		parsed = strconv.AppendUint(parsed, uint64(v), 10)
+		parsed = strconv.FormatUint(uint64(v), 10)
 	case uint64:
-		parsed = strconv.AppendUint(parsed, v, 10)
+		parsed = strconv.FormatUint(v, 10)
 	case float32:
-		parsed = strconv.AppendFloat(parsed, float64(v), 'g', -1, 32)
+		parsed = strconv.FormatFloat(float64(v), 'g', -1, 32)
 	case float64:
-		parsed = strconv.AppendFloat(parsed, v, 'g', -1, 64)
+		parsed = strconv.FormatFloat(v, 'g', -1, 64)
 	default:
 		// fall back to rendering it as json
-		parsed, _ = json.Marshal(v)
+
+		dt, _ := json.Marshal(v)
+		parsed = internal.BytesToString(dt)
 	}
 	return content{html: parsed}
 }
 
 // function is used to render raw html
 func Raw(t string) content {
-	return content{html: internal.StringToBytes(t)}
+	return content{html: t}
 }
 
 func (t content) Attributes(_ ...Attr) GmlElement {
@@ -77,14 +79,14 @@ func (t content) Children(_ ...GmlElement) GmlElement {
 }
 
 func (t content) RenderHtml(ctx context.Context) (html []byte, err error) {
-	return t.html, nil
+	return internal.StringToBytes(t.html), nil
 }
 
 func (t content) Render(_ context.Context, w io.Writer) error {
 	if len(t.html) == 0 {
 		return nil
 	}
-	_, err := w.Write(t.html)
+	_, err := w.Write(internal.StringToBytes(t.html))
 	return err
 }
 
@@ -92,7 +94,7 @@ func (t content) RenderBestEffort(_ context.Context, w io.Writer) error {
 	if len(t.html) == 0 {
 		return nil
 	}
-	_, err := w.Write(t.html)
+	_, err := w.Write(internal.StringToBytes(t.html))
 	return err
 }
 
