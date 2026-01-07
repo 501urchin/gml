@@ -46,7 +46,7 @@ func TestMap(t *testing.T) {
 		}
 
 		if string(htmlKeyed) != expKeyed {
-			t.Fatalf("returned html doesn't match expected: got: %v -> expected: %v", htmlKeyed, expKeyed)
+			t.Fatalf("returned html doesn't match expected: got: %s -> expected: %v", htmlKeyed, expKeyed)
 		}
 	})
 }

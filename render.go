@@ -4,16 +4,13 @@ import (
 	"bytes"
 	"context"
 	"io"
-	"slices"
 )
 
 type gmlElement struct {
-	attributes    []Attr       // 24 bytes
-	children      []GmlElement // 24 bytes
-	attrKeysLen   uint32       // 4 bytes
-	attrValuesLen uint32       // 4 bytes
-	tag           uint8        // 1 byte
-	void          bool         // 1 byte
+	children   []GmlElement // 24 bytes
+	attributes []Attr       // 24 bytes
+	tag        uint8        // 1 byte
+	void       bool         // 1 byte
 }
 
 var leftBracket = []byte("<")
@@ -30,13 +27,7 @@ func newgmlElement(tag uint8, void bool) *gmlElement {
 
 func (elm *gmlElement) Attributes(attributes ...Attr) GmlElement {
 	if l := len(attributes); l != 0 {
-		elm.attributes = slices.Grow(elm.attributes, l)
-
-		for _, attr := range attributes {
-			elm.attributes = append(elm.attributes, attr)
-			elm.attrKeysLen += uint32(len(attr.Key))
-			elm.attrValuesLen += uint32(len(attr.Value)) + 3
-		}
+		elm.attributes = append(elm.attributes, attributes...)
 	}
 
 	return elm
@@ -48,7 +39,6 @@ func (elm *gmlElement) Children(children ...GmlElement) GmlElement {
 	}
 
 	if l := len(children); l != 0 {
-		elm.children = slices.Grow(elm.children, l)
 		elm.children = append(elm.children, children...)
 	}
 
@@ -110,7 +100,6 @@ func (d *gmlElement) renderInternal(ctx context.Context, w io.Writer, bestEffort
 				if bestEffort {
 					continue
 				} else {
-
 					return err
 				}
 			}
