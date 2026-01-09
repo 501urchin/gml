@@ -7,10 +7,10 @@ import (
 )
 
 type gmlElement struct {
-	children   []GmlElement // 24 bytes
-	attributes []Attr       // 24 bytes
-	tag        uint8        // 1 byte
-	void       bool         // 1 byte
+	children   []GmlElement
+	attributes []Attr
+	tag        uint8
+	void       bool
 }
 
 var leftBracket = []byte("<")

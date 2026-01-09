@@ -1,107 +1,98 @@
 package gml
 
 import (
+	"bytes"
 	"testing"
 )
 
-// func TestGmlElement(t *testing.T) {
-// 	expected := `<h1 class="text-white">hello</h1>`
+func TestGmlElement(t *testing.T) {
+	expected := `<h1 class="text-white">hello</h1>`
 
-// 	attributes := []Attr{{Key: []byte("class"), Value: []byte("text-white")}}
-// 	childElm := Content("hello")
-// 	void := false
-// 	gmlElementTag := elH1
+	attributes := []Attr{{Key: "class", Value: "text-white"}}
+	childElm := Content("hello")
+	void := false
+	gmlElementTag := elH1
 
-// 	v := newGmlElement(gmlElementTag, void).Attributes(attributes...).Children(childElm)
-// 	elm, ok := v.(*gmlElement)
-// 	if !ok {
-// 		t.Fatal("failed to cast newGmlElement as *gmlElement")
-// 	}
+	v := newGmlElement(gmlElementTag, void).Attributes(attributes...).Children(childElm)
+	elm, ok := v.(*gmlElement)
+	if !ok {
+		t.Fatal("failed to cast newGmlElement as *gmlElement")
+	}
 
-// 	if elm.tag != gmlElementTag {
-// 		t.Errorf("tag mismatch: expected %q, got %q", gmlElementTag, elm.tag)
-// 	}
+	if elm.tag != gmlElementTag {
+		t.Errorf("tag mismatch: expected %q, got %q", gmlElementTag, elm.tag)
+	}
 
-// 	if len(elm.children) != 1 {
-// 		t.Errorf("children length mismatch: expected 1, got %d", len(elm.children))
-// 	} else if html, _ := elm.children[0].RenderHtml(t.Context()); string(html) != string(childElm.html) {
-// 		t.Errorf("child mismatch: expected %#v, got %#v", childElm, elm.children[0])
-// 	}
+	if len(elm.children) != 1 {
+		t.Errorf("children length mismatch: expected 1, got %d", len(elm.children))
+	} else if html, _ := elm.children[0].RenderHtml(t.Context()); string(html) != string(childElm.html) {
+		t.Errorf("child mismatch: expected %#v, got %#v", childElm, elm.children[0])
+	}
 
-// 	if len(elm.attributes) != 1 {
-// 		t.Errorf("attributes length mismatch: expected 1, got %d", len(elm.attributes))
-// 	} else if !bytes.Equal(elm.attributes[0].Key, attributes[0].Key) {
-// 		t.Errorf("attribute mismatch: expected %#v, got %#v", attributes[0], elm.attributes[0])
-// 	}
+	if len(elm.attributes) != 1 {
+		t.Errorf("attributes length mismatch: expected 1, got %d", len(elm.attributes))
+	} else if elm.attributes[0].Key != attributes[0].Key {
+		t.Errorf("attribute mismatch: expected %#v, got %#v", attributes[0], elm.attributes[0])
+	}
 
-// 	if elm.void != void {
-// 		t.Errorf("void flag mismatch: expected %t, got %t", void, elm.void)
-// 	}
+	if elm.void != void {
+		t.Errorf("void flag mismatch: expected %t, got %t", void, elm.void)
+	}
 
-// 	// t.Run("render empty tag", func(t *testing.T) {
-// 	// 	html, err := newGmlElement(0, void).RenderHtml(t.Context())
-// 	// 	if err != nil {
-// 	// 		t.Fatal(err)
-// 	// 	}
-// 	// 	if len(html) != 0 {
-// 	// 		t.Errorf("render empty tag mismatch: expected empty string, got %q", html)
-// 	// 	}
-// 	// })
+	t.Run("render", func(t *testing.T) {
+		var buf bytes.Buffer
 
-// 	t.Run("render", func(t *testing.T) {
-// 		var buf bytes.Buffer
+		err := elm.Render(t.Context(), &buf)
+		if err != nil {
+			t.Errorf("render returned error: %v", err)
+		}
 
-// 		err := elm.Render(t.Context(), &buf)
-// 		if err != nil {
-// 			t.Errorf("render returned error: %v", err)
-// 		}
+		if got := buf.String(); got != expected {
+			t.Errorf("render output mismatch:\nexpected:\n%s\ngot:\n%s", expected, got)
+		}
+	})
 
-// 		if got := buf.String(); got != expected {
-// 			t.Errorf("render output mismatch:\nexpected:\n%s\ngot:\n%s", expected, got)
-// 		}
-// 	})
+	t.Run("render raw html", func(t *testing.T) {
+		if got, _ := elm.RenderHtml(t.Context()); string(got) != expected {
+			t.Errorf("renderHtml output mismatch:\nexpected:\n%s\ngot:\n%s", expected, got)
+		}
+	})
 
-// 	t.Run("render raw html", func(t *testing.T) {
-// 		if got, _ := elm.RenderHtml(t.Context()); string(got) != expected {
-// 			t.Errorf("renderHtml output mismatch:\nexpected:\n%s\ngot:\n%s", expected, got)
-// 		}
-// 	})
+	t.Run("render nil as empty", func(t *testing.T) {
+		elm := Div().Children(
+			childElm,
+			nil,
+		)
 
-// 	t.Run("render nil as empty", func(t *testing.T) {
-// 		elm := Div().Children(
-// 			childElm,
-// 			nil,
-// 		)
+		html, err := elm.RenderHtml(t.Context())
+		if err != nil {
+			t.Fatal(err)
+		}
 
-// 		html, err := elm.RenderHtml(t.Context())
-// 		if err != nil {
-// 			t.Fatal(err)
-// 		}
+		chtml, err := childElm.RenderHtml(t.Context())
+		if err != nil {
+			t.Fatal(err)
+		}
 
-// 		chtml, err := childElm.RenderHtml(t.Context())
-// 		if err != nil {
-// 			t.Fatal(err)
-// 		}
+		if string(html) != "<div>"+string(chtml)+"</div>" {
+			t.Error("function rendered a nil value")
+		}
+	})
 
-// 		if string(html) != "<div>"+string(chtml)+"</div>" {
-// 			t.Error("function rendered a nil value")
-// 		}
-// 	})
+	t.Run("nil receiver", func(t *testing.T) {
+		defer func() {
+			err := recover()
+			if err != nil {
+				t.Error("function failed to do nil checks and caused a panic")
+			}
+		}()
 
-// 	t.Run("nil receiver", func(t *testing.T) {
-// 		defer func() {
-// 			err := recover()
-// 			if err != nil {
-// 				t.Error("function failed to do nil checks and caused a panic")
-// 			}
-// 		}()
+		var elm *gmlElement = nil
 
-// 		var elm *gmlElement = nil
+		elm.RenderHtml(t.Context())
+	})
 
-// 		elm.RenderHtml(t.Context())
-// 	})
-
-// }
+}
 
 var template = Html().
 	Attributes(Attribute("lang", "en")).

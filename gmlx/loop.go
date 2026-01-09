@@ -13,8 +13,6 @@ type mapComponent[S any] struct {
 	iter  func(index int, item S) gml.GmlElement
 }
 
-
-
 func Map[S any](items []S, fn func(index int, item S) gml.GmlElement) mapComponent[S] {
 	return mapComponent[S]{items: items, iter: fn}
 }
