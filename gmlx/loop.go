@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"io"
-	"strconv"
 
 	"github.com/501urchin/gml"
 )
@@ -12,30 +11,23 @@ import (
 type mapComponent[S any] struct {
 	items []S
 	iter  func(index int, item S) gml.GmlElement
-	keyed bool
 }
 
-func Map[S any](items []S, fn func(index int, item S) gml.GmlElement) *mapComponent[S] {
-	return &mapComponent[S]{items: items, iter: fn, keyed: false}
+
+
+func Map[S any](items []S, fn func(index int, item S) gml.GmlElement) mapComponent[S] {
+	return mapComponent[S]{items: items, iter: fn}
 }
 
-func MapKeyed[S any](items []S, fn func(index int, item S) gml.GmlElement) *mapComponent[S] {
-	return &mapComponent[S]{items: items, iter: fn, keyed: true}
-}
-
-func (m *mapComponent[S]) Attributes(_ ...gml.Attr) gml.GmlElement {
+func (m mapComponent[S]) Attributes(_ ...gml.Attr) gml.GmlElement {
 	return m
 }
 
-func (m *mapComponent[S]) Children(_ ...gml.GmlElement) gml.GmlElement {
+func (m mapComponent[S]) Children(_ ...gml.GmlElement) gml.GmlElement {
 	return m
 }
 
-func (m *mapComponent[S]) RenderHtml(ctx context.Context) (html []byte, err error) {
-	if m == nil {
-		return
-	}
-
+func (m mapComponent[S]) RenderHtml(ctx context.Context) (html []byte, err error) {
 	var buf bytes.Buffer
 	err = m.Render(ctx, &buf)
 	if err != nil {
@@ -45,17 +37,9 @@ func (m *mapComponent[S]) RenderHtml(ctx context.Context) (html []byte, err erro
 	return buf.Bytes(), nil
 }
 
-func (m *mapComponent[S]) Render(ctx context.Context, w io.Writer) error {
-	if m == nil {
-		return nil
-	}
-
+func (m mapComponent[S]) Render(ctx context.Context, w io.Writer) error {
 	for idx, item := range m.items {
 		res := m.iter(idx, item)
-		if m.keyed {
-			res.Attributes(gml.Attribute("key", strconv.Itoa(idx)))
-		}
-
 		err := res.Render(ctx, w)
 		if err != nil {
 			return err
@@ -64,17 +48,9 @@ func (m *mapComponent[S]) Render(ctx context.Context, w io.Writer) error {
 
 	return nil
 }
-func (m *mapComponent[S]) RenderBestEffort(ctx context.Context, w io.Writer) error {
-	if m == nil {
-		return nil
-	}
-
+func (m mapComponent[S]) RenderBestEffort(ctx context.Context, w io.Writer) error {
 	for idx, item := range m.items {
 		res := m.iter(idx, item)
-		if m.keyed {
-			res.Attributes(gml.Attribute("key", strconv.Itoa(idx)))
-		}
-
 		err := res.Render(ctx, w)
 		if err != nil {
 			continue

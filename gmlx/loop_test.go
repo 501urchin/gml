@@ -2,6 +2,7 @@ package gmlx
 
 import (
 	"fmt"
+	"io"
 	"testing"
 
 	"github.com/501urchin/gml"
@@ -29,24 +30,15 @@ func TestMap(t *testing.T) {
 			t.Fatalf("returned html doesn't match expected: got: %v -> expected: %v", html, exp)
 		}
 	})
+}
 
-	t.Run("MapKeyed with keys", func(t *testing.T) {
-		elmKeyed := MapKeyed(items, func(idx int, item string) gml.GmlElement {
+func BenchmarkMap(b *testing.B) {
+	items := []string{"hello", "wrld", "gml"}
+	ctx := b.Context()
+	for b.Loop() {
+		Map(items, func(idx int, item string) gml.GmlElement {
 			return gml.P().Children(gml.Content(item))
-		})
+		}).Render(ctx, io.Discard)
+	}
 
-		htmlKeyed, err := elmKeyed.RenderHtml(t.Context())
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		expKeyed := ""
-		for i, item := range items {
-			expKeyed += fmt.Sprintf("<p key=\"%d\">%s</p>", i, item)
-		}
-
-		if string(htmlKeyed) != expKeyed {
-			t.Fatalf("returned html doesn't match expected: got: %s -> expected: %v", htmlKeyed, expKeyed)
-		}
-	})
 }
