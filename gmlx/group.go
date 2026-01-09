@@ -12,10 +12,10 @@ type group struct {
 	gmlElements []gml.GmlElement
 }
 
-func Group(gmlElements ...gml.GmlElement) *group {
-	var elm = make([]gml.GmlElement, 0, len(gmlElements))
-	elm = append(elm, gmlElements...)
-	return &group{gmlElements: elm}
+func Group(gmlElements ...gml.GmlElement) (g *group) {
+	g = &group{}
+	g.gmlElements = append(g.gmlElements, gmlElements...)
+	return
 }
 
 func (t *group) Attributes(_ ...gml.Attr) gml.GmlElement {

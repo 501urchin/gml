@@ -33,3 +33,19 @@ func TestGroup(t *testing.T) {
 		t.Errorf("failled to render group: got %q but expected %q", html, exp)
 	}
 }
+
+func BenchmarkGroup(b *testing.B) {
+	elm1 := gml.P().Children(gml.Content("hello"))
+	elm2 := gml.P().Children(gml.Content("hi"))
+	elm := Group(
+		elm1,
+		elm2,
+	)
+
+	ctx := b.Context()
+
+	for b.Loop() {
+		elm.RenderHtml(ctx)
+	}
+
+}
