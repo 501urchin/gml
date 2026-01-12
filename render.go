@@ -55,7 +55,12 @@ func (d *gmlElement) renderInternal(ctx context.Context, w io.Writer, bestEffort
 		return err
 	}
 
-	tag := elementNames[d.tag]
+	var tag []byte
+	if d.void {
+		tag = voidElementNames[d.tag]
+	} else {
+		tag = elementNames[d.tag]
+	}
 
 	if _, err := w.Write(tag); err != nil {
 		return err

@@ -18,22 +18,22 @@ const (
 	elDoctypeHTML
 )
 
-var voidElementNames = map[uint8]string{
-	elBr:          "br",
-	elHr:          "hr",
-	elBase:        "base",
-	elLink:        "link",
-	elMeta:        "meta",
-	elInput:       "input",
-	elWbr:         "wbr",
-	elCol:         "col",
-	elArea:        "area",
-	elEmbed:       "embed",
-	elImg:         "img",
-	elParam:       "param",
-	elSource:      "source",
-	elTrack:       "track",
-	elDoctypeHTML: "!DOCTYPE html",
+var voidElementNames = map[uint8][]byte{
+	elBr:          []byte("br"),
+	elHr:          []byte("hr"),
+	elBase:        []byte("base"),
+	elLink:        []byte("link"),
+	elMeta:        []byte("meta"),
+	elInput:       []byte("input"),
+	elWbr:         []byte("wbr"),
+	elCol:         []byte("col"),
+	elArea:        []byte("area"),
+	elEmbed:       []byte("embed"),
+	elImg:         []byte("img"),
+	elParam:       []byte("param"),
+	elSource:      []byte("source"),
+	elTrack:       []byte("track"),
+	elDoctypeHTML: []byte("!DOCTYPE html"),
 }
 
 // <br { attr }>
