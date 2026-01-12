@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"strconv"
+	"strings"
 
 	"github.com/501urchin/gml/internal"
 )
@@ -17,53 +18,61 @@ type content struct {
 
 var null = ""
 
-// Content creates a content struct representing the inner content of an HTML gmlElement.
-// It can also be used to render raw HTML strings directly.
-func Content(t any) content {
-	var parsed string
+// Content creates a content struct representing the inner content of an HTML GmlElement.
+// It can also be used to render raw HTML values directly.
+// Content accepts a variadic list of values; all arguments are concatenated in order
+// without adding any separators or whitespace.
+//
+// For example, Content("hello", 12) renders as: hello12
+func Content(t ...any) content {
+	var builder strings.Builder
+	builder.Grow(8 * len(t)) // default of 8 bytes since int is 64 bits
 
-	switch v := t.(type) {
-	case string:
-		parsed = v
-	case fmt.Stringer:
-		parsed = v.String()
-	case nil:
-		parsed = null
-	case []byte:
-		parsed = internal.BytesToString(v)
-	case bool:
-		parsed = strconv.FormatBool(v)
-	case int:
-		parsed = strconv.FormatInt(int64(v), 10)
-	case int8:
-		parsed = strconv.FormatInt(int64(v), 10)
-	case int16:
-		parsed = strconv.FormatInt(int64(v), 10)
-	case int32:
-		parsed = strconv.FormatInt(int64(v), 10)
-	case int64:
-		parsed = strconv.FormatInt(v, 10)
-	case uint:
-		parsed = strconv.FormatUint(uint64(v), 10)
-	case uint8:
-		parsed = strconv.FormatUint(uint64(v), 10)
-	case uint16:
-		parsed = strconv.FormatUint(uint64(v), 10)
-	case uint32:
-		parsed = strconv.FormatUint(uint64(v), 10)
-	case uint64:
-		parsed = strconv.FormatUint(v, 10)
-	case float32:
-		parsed = strconv.FormatFloat(float64(v), 'g', -1, 32)
-	case float64:
-		parsed = strconv.FormatFloat(v, 'g', -1, 64)
-	default:
-		// fall back to rendering it as json
+	for _, t := range t {
+		switch v := t.(type) {
+		case string:
+			builder.WriteString(v)
+		case fmt.Stringer:
+			builder.WriteString(v.String())
+		case nil:
+			builder.WriteString(null)
+		case []byte:
+			builder.WriteString(internal.BytesToString(v))
+		case bool:
+			builder.WriteString(strconv.FormatBool(v))
+		case int:
+			builder.WriteString(strconv.FormatInt(int64(v), 10))
+		case int8:
+			builder.WriteString(strconv.FormatInt(int64(v), 10))
+		case int16:
+			builder.WriteString(strconv.FormatInt(int64(v), 10))
+		case int32:
+			builder.WriteString(strconv.FormatInt(int64(v), 10))
+		case int64:
+			builder.WriteString(strconv.FormatInt(v, 10))
+		case uint:
+			builder.WriteString(strconv.FormatUint(uint64(v), 10))
+		case uint8:
+			builder.WriteString(strconv.FormatUint(uint64(v), 10))
+		case uint16:
+			builder.WriteString(strconv.FormatUint(uint64(v), 10))
+		case uint32:
+			builder.WriteString(strconv.FormatUint(uint64(v), 10))
+		case uint64:
+			builder.WriteString(strconv.FormatUint(v, 10))
+		case float32:
+			builder.WriteString(strconv.FormatFloat(float64(v), 'g', -1, 32))
+		case float64:
+			builder.WriteString(strconv.FormatFloat(v, 'g', -1, 64))
+		default:
+			// fall back to rendering it as json
 
-		dt, _ := json.Marshal(v)
-		parsed = internal.BytesToString(dt)
+			dt, _ := json.Marshal(v)
+			builder.WriteString(internal.BytesToString(dt))
+		}
 	}
-	return content{html: parsed}
+
+	return content{html: builder.String()}
 }
 
 // function is used to render raw html
