@@ -7,55 +7,55 @@ import (
 	"github.com/501urchin/gml"
 )
 
-func TestCache(t *testing.T) {
+func TestMemoize(t *testing.T) {
 	ctx := context.Background()
 
 	dep := 1
 	depFunc := func(dep int) gml.GmlElement { return gml.Div().Children(gml.Content(dep)) }
 
-	// Call Cache first time, should populate cache
-	nlm := Cache(ctx, dep, depFunc)
+	// Call Memoize first time, should populate Memoize
+	nlm := Memoize(ctx, dep, depFunc)
 	html, err := nlm.RenderHtml(ctx)
 	if err != nil {
 		t.Fatalf("RenderHtml failed: %v", err)
 	}
 
-	// Verify cache has the stored value
+	// Verify Memoize has the stored value
 	found := false
-	for _, v := range cacheStore.store {
+	for _, v := range memoStore.store {
 		if string(html) == v {
 			found = true
 			break
 		}
 	}
 	if !found {
-		t.Fatal("failed to set cache")
+		t.Fatal("failed to set Memoize")
 	}
 
-	// Call Cache again with same dependency, should hit cache
-	nlm2 := Cache(ctx, dep, depFunc)
+	// Call Memoize again with same dependency, should hit Memoize
+	nlm2 := Memoize(ctx, dep, depFunc)
 	html2, err := nlm2.RenderHtml(ctx)
 	if err != nil {
-		t.Fatalf("RenderHtml failed on cache hit: %v", err)
+		t.Fatalf("RenderHtml failed on Memoize hit: %v", err)
 	}
 
 	if string(html2) != string(html) {
-		t.Fatal("cache hit returned different value")
+		t.Fatal("Memoize hit returned different value")
 	}
 
-	// Change dependency, cache should be invalidated
+	// Change dependency, Memoize should be invalidated
 	dep = 5
-	nlm3 := Cache(ctx, dep, depFunc)
+	nlm3 := Memoize(ctx, dep, depFunc)
 	html3, err := nlm3.RenderHtml(ctx)
 	if err != nil {
 		t.Fatalf("RenderHtml failed on new dependency: %v", err)
 	}
 
 	if string(html3) == string(html) {
-		t.Fatalf("cache was not invalidated when dependency changed: %q - %q", html3, html)
+		t.Fatalf("Memoize was not invalidated when dependency changed: %q - %q", html3, html)
 	}
 }
-func BenchmarkCache(b *testing.B) {
+func BenchmarkMemoize(b *testing.B) {
 	dep := 1
 	elm := gml.Div().Children(gml.Content(dep))
 
@@ -66,10 +66,10 @@ func BenchmarkCache(b *testing.B) {
 		}
 	})
 
-	b.Run("cached", func(b *testing.B) {
+	b.Run("Memoized", func(b *testing.B) {
 		ctx := b.Context()
 		for b.Loop() {
-			Cache(ctx, dep, func(dep int) gml.GmlElement { return gml.Div().Children(gml.Content(dep)) }).RenderHtml(ctx)
+			Memoize(ctx, dep, func(dep int) gml.GmlElement { return gml.Div().Children(gml.Content(dep)) }).RenderHtml(ctx)
 		}
 	})
 

@@ -11,11 +11,11 @@ type Attr struct {
 	Value string
 }
 
-func Attribute(key string, value ...string) Attr {
+func Attribute(key string, value ...any) Attr {
 	a := Attr{Key: key}
 
 	if len(value) != 0 {
-		a.Value = value[0]
+		a.Value = pkg.ConvertToString(value[0])
 	}
 
 	return a

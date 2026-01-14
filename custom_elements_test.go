@@ -28,7 +28,7 @@ func TestContent(t *testing.T) {
 			{nil, ""},
 			{3.14, "3.14"},
 			{float32(2.71), "2.71"},
-			{struct{ A int }{A: 1}, `{"A":1}`},
+			{struct{ A int }{A: 1}, `{1}`},
 		}
 
 		for _, c := range cases {

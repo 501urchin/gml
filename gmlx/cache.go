@@ -2,7 +2,6 @@ package gmlx
 
 import (
 	"context"
-	"fmt"
 	"sync"
 
 	"github.com/501urchin/gml"
@@ -15,19 +14,35 @@ type store struct {
 	store map[uint64]string
 }
 
-var cacheStore = store{store: make(map[uint64]string)}
+var memoStore = store{store: make(map[uint64]string)}
 
-// this is only reccomended for componenets that have a deeply nested structure
-func Cache[T any](ctx context.Context, dep T, elm func(dep T) gml.GmlElement) gml.GmlElement {
-	cacheKey := xxhash.Sum64(pkg.StringToBytes(fmt.Sprintf("%v", dep))) // could optimize this further by implementing switch(type)
+// Memoize memoizes the rendered HTML for the lifetime of the process.
+//
+// WARNING: This function is UNBOUNDED.
+// Each unique dependency value creates a new cache entry that is never
+// evicted or expired. Memory usage will grow indefinitely as new
+// dependency values are observed.
+//
+// This function must only be used for special cases where:
+//   - The dependency space is known, small, and finite
+//   - The render function is pure and deterministic
+//   - The output is immutable for the lifetime of the process
+//
+// Do NOT use this for request-scoped data, user input, or any
+// high-cardinality dependencies.
+func Memoize[T any](ctx context.Context, dep T, elm func(dep T) gml.GmlElement) gml.GmlElement {
+	cacheKey := xxhash.Sum64(pkg.StringToBytes(pkg.ConvertToString(dep)))
 
-	cacheStore.mu.RLock()
-	v, hit := cacheStore.store[cacheKey]
-	cacheStore.mu.RUnlock()
+	memoStore.mu.RLock()
+	v, hit := memoStore.store[cacheKey]
+	memoStore.mu.RUnlock()
 
 	if hit {
 		return gml.Raw(v)
 	}
+
+	memoStore.mu.Lock()
+	defer memoStore.mu.Unlock()
 
 	html, err := elm(dep).RenderHtml(ctx)
 	if err != nil {
@@ -36,9 +51,16 @@ func Cache[T any](ctx context.Context, dep T, elm func(dep T) gml.GmlElement) gm
 
 	rhtml := string(html)
 
-	cacheStore.mu.Lock()
-	cacheStore.store[cacheKey] = rhtml
-	cacheStore.mu.Unlock()
+	memoStore.store[cacheKey] = rhtml
 
 	return gml.Raw(rhtml)
+}
+
+// ClearMemo removes all memoized entries.
+// This does not change the unbounded nature of Memoize and should only
+// be used for explicit invalidation or testing.
+func ClearMemo() {
+	memoStore.mu.Lock()
+	memoStore.store = make(map[uint64]string)
+	memoStore.mu.Unlock()
 }

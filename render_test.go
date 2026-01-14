@@ -96,31 +96,31 @@ func TestGmlElement(t *testing.T) {
 }
 
 func TestRendering(t *testing.T) {
-	t.Run("normal element rendering", func(t *testing.T) {		
+	t.Run("normal element rendering", func(t *testing.T) {
 		ctx := t.Context()
 		for k, v := range elementNames {
 			html, err := newGmlElement(k, false).RenderHtml(ctx)
 			if err != nil {
 				t.Error(err)
 			}
-	
+
 			expected := fmt.Sprintf("<%s></%s>", v, v)
-	
+
 			if string(html) != expected {
 				t.Errorf("expected %q but got %q", expected, html)
 			}
 		}
 	})
-	t.Run("void element rendering", func(t *testing.T) {		
+	t.Run("void element rendering", func(t *testing.T) {
 		ctx := t.Context()
 		for k, v := range voidElementNames {
 			html, err := newGmlElement(k, true).RenderHtml(ctx)
 			if err != nil {
 				t.Error(err)
 			}
-	
+
 			expected := fmt.Sprintf("<%s>", v)
-	
+
 			if string(html) != expected {
 				t.Errorf("expected %q but got %q", expected, html)
 			}

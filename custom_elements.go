@@ -2,10 +2,7 @@ package gml
 
 import (
 	"context"
-	"encoding/json"
-	"fmt"
 	"io"
-	"strconv"
 	"strings"
 
 	"github.com/501urchin/gml/pkg"
@@ -16,8 +13,6 @@ type content struct {
 	html string
 }
 
-var null = ""
-
 // Content creates a content struct representing the inner content of an HTML GmlElement.
 // It can also be used to render raw HTML values directly.
 // Content accepts a variadic list of values; all arguments are concatenated in order
@@ -26,50 +21,9 @@ var null = ""
 // For example, Content("hello", 12) renders as: hello12
 func Content(t ...any) content {
 	var builder strings.Builder
-	builder.Grow(8 * len(t)) // default of 8 bytes since int is 64 bits
 
 	for _, t := range t {
-		switch v := t.(type) {
-		case string:
-			builder.WriteString(v)
-		case fmt.Stringer:
-			builder.WriteString(v.String())
-		case nil:
-			builder.WriteString(null)
-		case []byte:
-			builder.WriteString(pkg.BytesToString(v))
-		case bool:
-			builder.WriteString(strconv.FormatBool(v))
-		case int:
-			builder.WriteString(strconv.FormatInt(int64(v), 10))
-		case int8:
-			builder.WriteString(strconv.FormatInt(int64(v), 10))
-		case int16:
-			builder.WriteString(strconv.FormatInt(int64(v), 10))
-		case int32:
-			builder.WriteString(strconv.FormatInt(int64(v), 10))
-		case int64:
-			builder.WriteString(strconv.FormatInt(v, 10))
-		case uint:
-			builder.WriteString(strconv.FormatUint(uint64(v), 10))
-		case uint8:
-			builder.WriteString(strconv.FormatUint(uint64(v), 10))
-		case uint16:
-			builder.WriteString(strconv.FormatUint(uint64(v), 10))
-		case uint32:
-			builder.WriteString(strconv.FormatUint(uint64(v), 10))
-		case uint64:
-			builder.WriteString(strconv.FormatUint(v, 10))
-		case float32:
-			builder.WriteString(strconv.FormatFloat(float64(v), 'g', -1, 32))
-		case float64:
-			builder.WriteString(strconv.FormatFloat(v, 'g', -1, 64))
-		default:
-			// fall back to rendering it as json
-
-			dt, _ := json.Marshal(v)
-			builder.WriteString(pkg.BytesToString(dt))
-		}
+		builder.WriteString(pkg.ConvertToString(t))
 	}
 
 	return content{html: builder.String()}
