@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/501urchin/gml/internal"
+	"github.com/501urchin/gml/pkg"
 )
 
 // text content
@@ -37,7 +37,7 @@ func Content(t ...any) content {
 		case nil:
 			builder.WriteString(null)
 		case []byte:
-			builder.WriteString(internal.BytesToString(v))
+			builder.WriteString(pkg.BytesToString(v))
 		case bool:
 			builder.WriteString(strconv.FormatBool(v))
 		case int:
@@ -68,7 +68,7 @@ func Content(t ...any) content {
 			// fall back to rendering it as json
 
 			dt, _ := json.Marshal(v)
-			builder.WriteString(internal.BytesToString(dt))
+			builder.WriteString(pkg.BytesToString(dt))
 		}
 	}
 
@@ -88,14 +88,14 @@ func (t content) Children(_ ...GmlElement) GmlElement {
 }
 
 func (t content) RenderHtml(ctx context.Context) (html []byte, err error) {
-	return internal.StringToBytes(t.html), nil
+	return pkg.StringToBytes(t.html), nil
 }
 
 func (t content) Render(_ context.Context, w io.Writer) error {
 	if len(t.html) == 0 {
 		return nil
 	}
-	_, err := w.Write(internal.StringToBytes(t.html))
+	_, err := w.Write(pkg.StringToBytes(t.html))
 	return err
 }
 
@@ -103,7 +103,7 @@ func (t content) RenderBestEffort(_ context.Context, w io.Writer) error {
 	if len(t.html) == 0 {
 		return nil
 	}
-	_, err := w.Write(internal.StringToBytes(t.html))
+	_, err := w.Write(pkg.StringToBytes(t.html))
 	return err
 }
 

@@ -3,7 +3,7 @@ package gml
 import (
 	"io"
 
-	"github.com/501urchin/gml/internal"
+	"github.com/501urchin/gml/pkg"
 )
 
 type Attr struct {
@@ -29,7 +29,7 @@ func (a Attr) Render(w io.Writer) (err error) {
 		return
 	}
 
-	_, err = w.Write(internal.StringToBytes(a.Key))
+	_, err = w.Write(pkg.StringToBytes(a.Key))
 	if err != nil {
 		return
 	}
@@ -40,7 +40,7 @@ func (a Attr) Render(w io.Writer) (err error) {
 			return
 		}
 
-		_, err = w.Write(internal.StringToBytes(a.Value))
+		_, err = w.Write(pkg.StringToBytes(a.Value))
 		if err != nil {
 			return
 		}

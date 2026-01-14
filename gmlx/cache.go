@@ -1,13 +1,12 @@
 package gmlx
 
 import (
-	"bytes"
 	"context"
-	"encoding/binary"
-	"encoding/json"
+	"fmt"
 	"sync"
 
 	"github.com/501urchin/gml"
+	"github.com/501urchin/gml/pkg"
 	"github.com/cespare/xxhash/v2"
 )
 
@@ -18,23 +17,9 @@ type store struct {
 
 var cacheStore = store{store: make(map[uint64]string)}
 
-func binaryMarshalAnySlice(vals []any) []byte {
-	buf := new(bytes.Buffer)
-
-	for _, v := range vals {
-		binary.Write(buf, binary.LittleEndian, v)
-	}
-
-	return buf.Bytes()
-}
-
 // this is only reccomended for componenets that have a deeply nested structure
-func Cache(ctx context.Context, element gml.GmlElement, deps ...any) gml.GmlElement {
-	jsonobj, err := json.Marshal(deps)
-	if err != nil {
-		return element
-	}
-	cacheKey := xxhash.Sum64(jsonobj)
+func Cache[T any](ctx context.Context, dep T, elm func(dep T) gml.GmlElement) gml.GmlElement {
+	cacheKey := xxhash.Sum64(pkg.StringToBytes(fmt.Sprintf("%v", dep))) // could optimize this further by implementing switch(type)
 
 	cacheStore.mu.RLock()
 	v, hit := cacheStore.store[cacheKey]
@@ -44,9 +29,9 @@ func Cache(ctx context.Context, element gml.GmlElement, deps ...any) gml.GmlElem
 		return gml.Raw(v)
 	}
 
-	html, err := element.RenderHtml(ctx)
+	html, err := elm(dep).RenderHtml(ctx)
 	if err != nil {
-		return element
+		return elm(dep)
 	}
 
 	rhtml := string(html)
