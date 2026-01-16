@@ -55,22 +55,12 @@ func TestMemoize(t *testing.T) {
 		t.Fatalf("Memoize was not invalidated when dependency changed: %q - %q", html3, html)
 	}
 }
+
 func BenchmarkMemoize(b *testing.B) {
 	dep := 1
-	elm := gml.Div().Children(gml.Content(dep))
-
-	b.Run("normal", func(b *testing.B) {
-		ctx := b.Context()
-		for b.Loop() {
-			elm.RenderHtml(ctx)
-		}
-	})
-
-	b.Run("Memoized", func(b *testing.B) {
-		ctx := b.Context()
-		for b.Loop() {
-			Memoize(ctx, dep, func(dep int) gml.GmlElement { return gml.Div().Children(gml.Content(dep)) }).RenderHtml(ctx)
-		}
-	})
+	ctx := b.Context()
+	for b.Loop() {
+		Memoize(ctx, dep, func(dep int) gml.GmlElement { return gml.Div().Children(gml.Content(dep)) }).RenderHtml(ctx)
+	}
 
 }
